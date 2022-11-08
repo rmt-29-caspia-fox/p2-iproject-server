@@ -1,7 +1,10 @@
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const SECRET = process.env.JWT_CREDENTIAL
+const SALT = process.env.HASH_CREDENTIAL
 
 function hashedPassword(password) {
-  const hashedPassword = bcrypt.hashSync(password, 10)
+  const hashedPassword = bcrypt.hashSync(password, SALT)
   return hashedPassword
 }
 
@@ -9,4 +12,17 @@ function comparePassword(password, hashedPassword){
   return bcrypt.compareSync(password, hashedPassword)
 }
 
-module.exports = {hashedPassword, comparePassword}
+function signedToken(payload) {
+  return jwt.sign(payload, SECRET)
+}
+
+function verifyToken(token){
+  return jwt.verify(token, SECRET)
+}
+
+module.exports = {
+  hashedPassword, 
+  comparePassword,
+  signedToken,
+  verifyToken
+}

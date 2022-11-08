@@ -59,4 +59,40 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (email === undefined || email == "") {
+      throw { name: "email_required" };
+    }
+    if (password === undefined || password == "") {
+      throw { name: "password_required" };
+    }
+    const user = await db.collection("users").findOne({ email: email });
+    if (!user) {
+      throw { name: "invalidLogin" };
+    }
+
+    if (!comparePass(password, user.password)) {
+      throw { name: "invalidLogin" };
+    }
+
+    const payload = {
+      id: user._id,
+    };
+    const access_token = encodeToken(payload);
+    res.status(200).json({ access_token });
+  } catch (error) {
+    if (error.name == "invalidLogin") {
+      res.status(401).json({ message: "Invalid email or password" });
+    } else if(error.name == 'email_required') {
+      res.status(400).json({ message: 'Email is required'})
+    } else if(error.name == 'password_required') {
+      res.status(400).json({ message: 'Password is required'})
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+});
+
 

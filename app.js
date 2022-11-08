@@ -154,3 +154,25 @@ app.put("/vehicles/rent", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+app.put("/vehicles/review/:vehicleId", async (req, res) => {
+  try {
+    const { msg, rating } = req.body;
+
+    const user = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(req.user.id) });
+    const userId = user._id;
+    const name = user.name;
+
+    await db
+      .collection("vehicles")
+      .updateOne(
+        { _id: ObjectId(req.params.vehicleId) },
+        { $push: { reviews: { userId, name, msg, rating } } }
+      );
+    res.status(200).json({ message: "Success reviewed" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});

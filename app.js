@@ -123,3 +123,34 @@ app.use(async (req, res, next) => {
     }
   }
 });
+
+app.put("/vehicles/rent", async (req, res) => {
+  try {
+    const { vehicleId, startDate, endDate, duration, totalPrice } = req.body;
+    const paymentStatus = false;
+    await db
+      .collection("users")
+      .updateOne(
+        { _id: ObjectId(req.user.id) },
+        {
+          $push: {
+            rent: {
+              vehicleId,
+              startDate,
+              endDate,
+              duration,
+              totalPrice,
+              paymentStatus,
+            },
+          },
+        }
+      );
+    res
+      .status(200)
+      .json({
+        message: "Success rented the vehicle. Please finish the payment.",
+      });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});

@@ -1,6 +1,7 @@
 const errorHandler = (err, req, res, next) =>{
   let code = 500
   let message = "Internal Server Error"
+  console.log(err)
 
   if(err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError'){
     let errMsg = err.errors.map(el => el.message)
@@ -15,6 +16,9 @@ const errorHandler = (err, req, res, next) =>{
   } else if(err.name === "category_not_found"){
     code = 404
     message = "category not found"
+  } else if(err.name === "user_not_found"){
+    code = 404
+    message = "user not found"
   } else if(err.name === "forbidden"){
     code = 403
     message = "your not authorize"

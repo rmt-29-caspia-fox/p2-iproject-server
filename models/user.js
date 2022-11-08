@@ -31,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "email is required" },
           notNull: { msg: "email is required" },
           isEmail: { msg: "invalid email format" },
-          len: {
-            args: 5,
-            msg: "password length minimum 5 characters",
-          },
         },
         unique: { msg: "email already being registered" },
       },
@@ -44,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notEmpty: { msg: `Password is required` },
           notNull: { msg: `Password is required` },
+          len: {
+            args: 5,
+            msg: "password length minimum 5 characters",
+          },
         },
       },
     },

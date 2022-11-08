@@ -108,6 +108,22 @@ class CustomerController {
       next(error);
     }
   }
+
+  static async getMangaDetail(req, res, next) {
+    //
+    const id = req.params.id;
+    try {
+      const result = await axios({
+        method: `GET`,
+        url: `https://kitsu.io/api/edge/manga/${id}`,
+      });
+      console.log(result.data);
+
+      res.status(200).json(result.data);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = CustomerController;

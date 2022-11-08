@@ -20,6 +20,9 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name === "no password") {
     code = 400;
     message = "Password is required";
+  } else if (err.name === "manga not found") {
+    code = 400;
+    message = "Manga not found";
   }
 
   res.status(code).json({ message });

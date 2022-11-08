@@ -24,7 +24,7 @@ class UserController {
       };
 
       const access_token = encode(payload);
-
+ 
       res.status(200).json({ access_token });
     } catch (error) {
       next(error);

@@ -1,6 +1,7 @@
 const { compare } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
 const { User, Bookmark } = require("../models");
+const { OAuth2Client } = require("google-auth-library");
 
 class CustomerController {
   static async register(req, res, next) {
@@ -48,6 +49,44 @@ class CustomerController {
       const access_token = createToken(payload);
       // console.log(user, "<<< user");
       res.status(200).json({ access_token, username: customer.username });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async googleLogin(req, res, next) {
+    try {
+      const { google_token } = req.headers;
+      console.log(google_token, "<< google token");
+
+      const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+      const client = new OAuth2Client(CLIENT_ID);
+
+      const ticket = await client.verifyIdToken({
+        idToken: google_token,
+        audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+      });
+      const payload = ticket.getPayload();
+      console.log(payload, "<< payload google");
+
+      const [customer, created] = await User.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          email: payload.email,
+          username: payload.given_name + "_" + payload.family_name,
+          password: "google_oauth",
+        },
+        hooks: false,
+      });
+      const access_token = createToken({ id: customer.id });
+
+      res.status(200).json({
+        message: "ok",
+        access_token,
+        username: customer.username,
+      });
     } catch (error) {
       next(error);
     }

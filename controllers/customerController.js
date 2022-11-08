@@ -2,6 +2,7 @@ const { compare } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
 const { User, Bookmark } = require("../models");
 const { OAuth2Client } = require("google-auth-library");
+const axios = require("axios");
 
 class CustomerController {
   static async register(req, res, next) {
@@ -87,6 +88,22 @@ class CustomerController {
         access_token,
         username: customer.username,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getMangas(req, res, next) {
+    //
+    try {
+      const result = await axios({
+        method: `GET`,
+        url: `https://kitsu.io/api/edge/manga?page[limit]=20&page[offset]=0&sort=-favoritesCount`,
+      });
+      // console.log(result, "<<< res");  <<< error
+      console.log(result.data, "<<< res data"); // << 20 obj mangas
+
+      res.status(200).json(result.data);
     } catch (error) {
       next(error);
     }

@@ -4,5 +4,6 @@ const router = require("express").Router();
 router.post("/register", CustomerController.register);
 router.post("/login", CustomerController.login);
 router.post("/google-login", CustomerController.googleLogin);
+router.get("/mangas", CustomerController.getMangas);
 
 module.exports = router;

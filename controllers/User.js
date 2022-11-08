@@ -15,7 +15,6 @@ class Users {
       delete user.dataValues.password;
       res.status(201).json({ message: "User Created", user });
     } catch (error) {
-      console.log(error)
       next(error);
     }
   }

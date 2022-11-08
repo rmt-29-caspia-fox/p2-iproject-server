@@ -11,6 +11,15 @@ const errorHandler = (err, req, res, next) => {
     message = err.errors[0].message;
     // res.status(400).json({ message: error.errors[0].message });
     // error.errors[0].map((el) => el.message)
+  } else if (err.name === "Invalid_credentials") {
+    code = 401;
+    message = "Invalid email or password";
+  } else if (err.name === "no email") {
+    code = 400;
+    message = "Email is required";
+  } else if (err.name === "no password") {
+    code = 400;
+    message = "Password is required";
   }
 
   res.status(code).json({ message });

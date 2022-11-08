@@ -3,6 +3,9 @@ const cors = require("cors");
 const { connectToDb, getDb } = require("./db");
 const app = express();
 const port = 3000;
+const { hashPass, comparePass } = require("./helpers/bcrypt");
+const { encodeToken, decodeToken } = require("./helpers/jwt");
+const { ObjectId } = require("mongodb");
 
 app.use(cors());
 app.use(express.json());

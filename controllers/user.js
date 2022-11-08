@@ -1,6 +1,5 @@
 const {User} = require('../models');
 const Help = require('../helpers');
-const { json } = require('sequelize');
 
 class UserController{
   static async register(req, res, next) {

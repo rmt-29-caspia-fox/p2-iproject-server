@@ -21,7 +21,7 @@ class Controller {
       if(pageNum){
         startIndex = (+pageNum-1 )* 10
       }
-      const maxResults = 10;
+      const maxResults = 5;
       const key = "";
       const arrQ = query.split(" ").join("+")
       
@@ -31,11 +31,11 @@ class Controller {
         params: {
           q:arrQ,
           maxResults,
-          filter:"free-ebooks",
+          // filter:"free-ebooks",
           startIndex
         }
       });
-
+      
       res.status(200).json(data);
     } catch (error) {
       next(error);

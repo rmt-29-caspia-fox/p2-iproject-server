@@ -2,9 +2,11 @@
   "name": "p2-iproject-server",
   "version": "1.0.0",
   "description": "Individual Project - Server",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "test": "jest --forceExit --runInBand --silent"
   },
   "repository": {
     "type": "git",

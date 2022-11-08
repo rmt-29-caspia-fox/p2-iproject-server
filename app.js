@@ -95,4 +95,31 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.use(async (req, res, next) => {
+  try {
+    const { access_token } = req.headers;
+    if (!access_token) {
+      throw { name: "invalidToken" };
+    }
 
+    const payload = decodeToken(access_token);
+    const userLogin = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(payload.id) });
+    if (!userLogin) {
+      throw { name: "invalidToken" };
+    }
+
+    req.user = {
+      id: userLogin._id,
+    };
+
+    next();
+  } catch (error) {
+    if (error.name == "invalidToken" || error.name == "JsonWebTokenError") {
+      res.status(401).json({ message: "Invalid token" });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+});

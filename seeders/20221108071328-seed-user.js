@@ -14,6 +14,7 @@ module.exports = {
     */
    const user = [
     {
+      username: `admin`,
       email: `admin@mail.com`,
       password: Help.hashPassword('administrator'),
       createdAt: new Date(),

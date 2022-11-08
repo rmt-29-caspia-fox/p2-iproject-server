@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      WaitingList.belongsTo(models.Customer)
     }
   }
   WaitingList.init({

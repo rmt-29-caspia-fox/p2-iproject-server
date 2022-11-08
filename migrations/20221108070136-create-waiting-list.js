@@ -40,15 +40,6 @@ module.exports = {
         onDelete : 'cascade',
         onUpdate : 'cascade',
       },
-      AdminId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        reference: {
-          model: 'Admins'
-        },
-        onDelete : 'cascade',
-        onUpdate : 'cascade',
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -62,14 +62,6 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {msg: 'CustomerId is required'},
         notEmpty: {msg: 'CustomerId is required'}
       }
-    },
-    AdminId: {
-      type:DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {msg: 'AdminId is required'},
-        notEmpty: {msg: 'AdminId is required'}
-      }
     }
   }, {
     sequelize,

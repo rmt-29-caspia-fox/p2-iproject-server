@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const port = process.env.PORT || 3000
 const express = require("express");
-// const Middleware = require("./middleware");
+const Middleware = require("./middleware");
 const app = express();
 const router = require("./routes");
 const cors = require("cors");
@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use(router);
 
+app.use(Middleware.errorHandler)
 
 app.listen(port, ()=> {
   console.log(`Run port ${port}`)

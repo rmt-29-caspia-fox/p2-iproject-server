@@ -5,7 +5,7 @@ const Middleware = require('../middleware');
 
 router.use('/', user)
 
-// router.use(Middleware.authentication)
+router.use(Middleware.authentication)
 
 router.use('/pub', news)
 

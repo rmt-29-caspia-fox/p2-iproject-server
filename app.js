@@ -110,6 +110,7 @@ app.get("/vehicles", (req, res) => {
     });
 });
 
+
 app.get("/vehicles/:id", async(req, res) => {
   try {
     const car = await db.collection("vehicles").findOne({_id: ObjectId(req.params.id)})

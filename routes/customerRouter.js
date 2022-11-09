@@ -9,5 +9,6 @@ router.get("/mangas", CustomerController.getMangas);
 router.get("/mangas/:id", CustomerController.getMangaDetail);
 
 router.use(authentication);
+router.post("/bookmarks/:mangaId", CustomerController.addBookmark);
 
 module.exports = router;

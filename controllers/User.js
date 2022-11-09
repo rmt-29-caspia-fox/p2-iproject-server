@@ -2,6 +2,7 @@ const { decodePassword } = require('../helpers/bcrypt');
 const { encodeToken } = require('../helpers/jwt');
 const { User } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
+const { default: axios } = require('axios');
 const CLIENT_ID = process.env.CLIENT_ID
 
 class Users {
@@ -78,6 +79,54 @@ class Users {
       res.status(200).json({ message: "Login OK", access_token })
     } catch (err) {
       next(err);
+    }
+  }
+
+  static async Discord(req, res, next) {
+    const { code } = req.query
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "https://discord.com/api/oauth2/token",
+        params: {
+          client_id: process.env.DISCORD_CLIENT_ID,
+          client_secret: process.env.DISCORD_CLIENT_SECRET,
+          grant_type: 'authorization_code',
+          code: code,
+          redirect_uri: "http://localhost:3000/auth/discord"
+        }
+      })
+      const { access_token, token_type } = data
+      const userResponse = await axios({
+        method: "get",
+        url: 'https://discord.com/api/users/@me',
+        headers: {
+          authorization: `${token_type} ${access_token}`
+        }
+      })
+      const payload = {
+        username: userResponse.data.username,
+        email: userResponse.data.email,
+      }
+      let user;
+      [user] = await User.findOrCreate({
+        where: {
+          email: payload.email
+        },
+        defaults: {
+          username: payload.username,
+          email: payload.email,
+          password: 'discord_auth'
+        },
+        hooks: false
+      })
+
+      access_token = encodeToken({
+        id: user.id
+      })
+      res.status(200).json({ message: "Login OK", access_token })
+    } catch (err) {
+      next(err)
     }
   }
 }

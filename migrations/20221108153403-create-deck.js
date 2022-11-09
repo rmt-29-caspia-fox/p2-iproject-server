@@ -19,7 +19,7 @@ module.exports = {
         onUpdate: 'CASCADE'
       },
       Cards: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER)
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       createdAt: {
         allowNull: false,

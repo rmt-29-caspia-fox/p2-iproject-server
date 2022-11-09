@@ -38,10 +38,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: {msg: 'Username is required'},
-        notEmpty: {msg: 'Username is required'}
+        notNull: {msg: 'Password is required'},
+        notEmpty: {msg: 'Password is required'}
       }
-    }
+    },
+    latitude: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {msg: 'Latitude is required'},
+        notEmpty: {msg: 'Latitude is required'}
+      }
+    },
+    longitude: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {msg: 'Longitude is required'},
+        notEmpty: {msg: 'Longitude is required'}
+      }
+    },
   }, {
     sequelize,
     modelName: 'User',

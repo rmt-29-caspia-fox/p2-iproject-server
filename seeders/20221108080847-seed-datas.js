@@ -40,6 +40,11 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete("WaitingLists", null, {
+      truncate: true,
+      cascade: true,
+      restartIdentity: true,
+    });
     await queryInterface.bulkDelete("Customers", null, {
       truncate: true,
       cascade: true,

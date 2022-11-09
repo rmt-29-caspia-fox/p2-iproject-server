@@ -5,7 +5,7 @@ class WaitingListController {
     try {
       const { status } = req.query;
       let option = {
-        order: [["createdAt", "asc"]],
+        order: [["createdAt", "desc"]],
         include: [Customer],
         where: {},
       };
@@ -32,7 +32,7 @@ class WaitingListController {
         include: [Customer],
         where: {},
       };
-      option.where = { status: ['done','waiting','onprogress'] };
+      option.where = { status: ['done','waiting','onprogres'] };
 
       const data = await WaitingList.findAll(option);
       res.status(200).json(data);

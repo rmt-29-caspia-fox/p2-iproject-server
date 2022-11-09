@@ -63,6 +63,15 @@ app.post("/login", async (req, res, next) => {
 	}
 });
 
+app.get("/products", async (req, res, next) => {
+	try {
+		const products = await Product.findAll();
+		res.status(200).json(products);
+	} catch (err) {
+		next(err);
+	}
+});
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;

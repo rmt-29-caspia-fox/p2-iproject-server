@@ -3,6 +3,7 @@ const fs = require("fs");
 const { hashPassword, comparePassword } = require("./helpers/bcrypt");
 const { encodeToken, decodeToken } = require("./helpers/jwt");
 const { User, Product, Cart } = require("./models");
+const { OAuth2Client } = require("google-auth-library");
 const cors = require("cors");
 const app = express();
 const port = 3000;
@@ -63,6 +64,46 @@ app.post("/login", async (req, res, next) => {
 	}
 });
 
+app.post("/google-sign-in", async (req, res, next) => {
+	try {
+		const CLIENT_ID =
+			"59509847986-2d6leab7etkccbsmeog4v9cq2l94t7hl.apps.googleusercontent.com";
+		const { google_token } = req.headers;
+		const client = new OAuth2Client(CLIENT_ID);
+		const ticket = await client.verifyIdToken({
+			idToken: google_token,
+			audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+			// Or, if multiple clients access the backend:
+			//[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+		});
+		const payload = ticket.getPayload();
+		console.log(payload);
+		// Untuk user yang login dengan Google, kita perlu cek, apakah si user sudah terdaftar di database atau belum dengan informasi yang ada di payload. --- contoh payload.email
+		// Jika user belum terdaftar, maka Create User
+		// Jika user sudah terdaftar, maka Generate access_token untuk login
+		const avatar = fs.readFileSync("./asset/avatar-default.png", "base64");
+		const [user, created] = await User.findOrCreate({
+			where: { email: payload.email },
+			defaults: {
+				firstName: "coba1",
+				lastName: "coba2",
+				email: payload.email,
+				password: payload.name + "_google",
+				phoneNumber: "999",
+				avatar: avatar,
+			},
+			hooks: false,
+		});
+		const access_token = encodeToken({
+			id: user.id,
+		});
+
+		res.status(200).json({ access_token });
+	} catch (err) {
+		next(err);
+	}
+});
+
 app.get("/products", async (req, res, next) => {
 	try {
 		const products = await Product.findAll();
@@ -97,16 +138,23 @@ app.use(async (req, res, next) => {
 app.post("/carts/:ProductId", async (req, res, next) => {
 	try {
 		const UserId = req.user.id;
-		const id = req.params.ProductId;
-		const product = await Product.findByPk(id);
+		const ProductId = req.params.ProductId;
+		const product = await Product.findByPk(ProductId);
 		if (!product) {
 			throw { name: "Product not found" };
 		}
-		const cart = await Cart.create({
-			UserId: UserId,
-			ProductId: id,
+		const [cart, created] = await Cart.findOrCreate({
+			where: { UserId: UserId, ProductId: ProductId },
+			defaults: {
+				UserId: UserId,
+				ProductId: ProductId,
+			},
 		});
-		res.status(201).json(cart);
+		if (created) {
+			res.status(201).json(cart);
+		} else {
+			res.status(409).json({ message: "Product has been added to cart" });
+		}
 	} catch (err) {
 		next(err);
 	}
@@ -118,8 +166,13 @@ app.get("/carts", async (req, res, next) => {
 		const carts = await Cart.findAll({
 			include: { model: Product },
 			where: { UserId: UserId },
+			order: [["id", "ASC"]],
 		});
-		res.status(200).json(carts);
+		if (carts.length < 1) {
+			res.status(409).json({ message: "Cart still empty" });
+		} else {
+			res.status(200).json(carts);
+		}
 	} catch (err) {
 		next(err);
 	}
@@ -163,7 +216,7 @@ app.delete("/carts/:id", authorization, async (req, res, next) => {
 app.use(async (err, req, res, next) => {
 	let code = 500;
 	let message = "Internal Server Error";
-
+	console.log(err);
 	if (
 		err.name === "SequelizeValidationError" ||
 		err.name === "SequelizeUniqueConstraintError"

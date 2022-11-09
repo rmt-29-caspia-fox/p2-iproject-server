@@ -46,6 +46,7 @@ List of available endpoints:
 
 - `POST /register`
 - `POST /login`
+- `POST /google-sign-in`
 - `GET /products`
 
 Routes below need authentication:
@@ -165,7 +166,33 @@ _Response (401 - Unauthorized)_
 
 &nbsp;
 
-## 3. GET /products
+## 3. POST /google-sign-in
+
+Description:
+
+- Sign in with Google Account
+
+Request:
+
+- headers:
+
+```json
+{
+	"google_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+	"access_token": "string"
+}
+```
+
+&nbsp;
+
+## 4. GET /products
 
 Description:
 
@@ -202,7 +229,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 4. POST /carts/:ProductId
+## 5. POST /carts/:ProductId
 
 Description:
 
@@ -244,9 +271,17 @@ _Response (404 - Not Found)_
 }
 ```
 
+_Response (409 - Conflict)_
+
+```json
+{
+	"message": "Product has been added to cart"
+}
+```
+
 &nbsp;
 
-## 5. GET /carts
+## 6. GET /carts
 
 Description:
 
@@ -282,9 +317,17 @@ _Response (200 - OK)_
 ]
 ```
 
+_Response (409 - Conflict)_
+
+```json
+{
+	"message": "Cart still empty"
+}
+```
+
 &nbsp;
 
-## 6. DELETE /carts/:id
+## 7. DELETE /carts/:id
 
 Description:
 

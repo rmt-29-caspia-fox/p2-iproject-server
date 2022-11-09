@@ -33,6 +33,9 @@ const errorHandler = (error, req, res, next) => {
   } else if (error.name === "password_required") {
     code = 400
     message = "password required"
+  } else if (error.name === 'out_of_stock') {
+    code = 400
+    message = "book is out of stock!"
   }
 
   res.status(code).json({ message });

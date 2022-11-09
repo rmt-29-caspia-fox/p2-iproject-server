@@ -7,4 +7,6 @@ router.post("/register",Controller.register);
 
 router.post("/gsearch",Controller.gSearch);
 
+router.post("/google-sign-in", Controller.googleLogin);
+
 module.exports = router;

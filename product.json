@@ -1,0 +1,74 @@
+[
+	{
+		"name": "Chicken Caesar Salad",
+		"description": "Moist and seasoned chicken breast with croutons and mixed vegetables",
+		"price": 110000,
+		"imageUrl": "https://www.recipecreek.com/wp-content/uploads/2019/05/Chicken-Caesar-Salad.jpg"
+	},
+	{
+		"name": "Corn & Egg Soup",
+		"description": "Hearty and seasoned corn, egg, and carrot soup topped with green onion",
+		"price": 40000,
+		"imageUrl": "https://drivemehungry.com/wp-content/uploads/2020/07/egg-drop-soup-16.jpg"
+	},
+	{
+		"name": "Spaghetti Bolognese",
+		"description": "Al dente spaghetti topped with minced meat tomato sauce with onions",
+		"price": 140000,
+		"imageUrl": "https://static.fanpage.it/wp-content/uploads/sites/22/2021/06/spaghetti-bolognese.jpg"
+	},
+	{
+		"name": "Spaghetti Aglio Olio",
+		"description": "Al dente spaghetti topped with chili shrimp and parmesan cheese",
+		"price": 140000,
+		"imageUrl": "https://cdn.cpnscdn.com/static.coupons.com/ext/kitchme/images/recipes/1200x800/spicy-shrimp-and-spaghetti-aglio-olio-garlic-and_1122.jpg"
+	},
+	{
+		"name": "Salmon Steak",
+		"description": "Moist and savory salmon steak with sliced lemon paired with asparagus",
+		"price": 190000,
+		"imageUrl": "https://image.freepik.com/free-photo/grilled-salmon-steak_1339-8427.jpg"
+	},
+	{
+		"name": "New York Steak",
+		"description": "Juicy and tender medium rare new york steak with seasoning and asparagus",
+		"price": 290000,
+		"imageUrl": "https://www.cawineclub.com/images/recipes/22_main_NewYorkStripSteak.jpg"
+	},
+	{
+		"name": "BBQ Ribs",
+		"description": "Full slab grilled ribs with honey glazed and seasoned french fries",
+		"price": 590000,
+		"imageUrl": "https://delivery.unionjack.ro/wp-content/uploads/2020/05/bbq-ribs-2-scaled.jpg"
+	},
+	{
+		"name": "Roasted CHicken",
+		"description": "Juicy and tender roasted chicken with honey glazed and herbs",
+		"price": 290000,
+		"imageUrl": "https://deckfamilyfarm.com/wordpress/images/2015/09/poultryHerbRoastedChicken.jpg"
+	},
+	{
+		"name": "Tiramisu",
+		"description": "Savoiardi dipped in coffee, layered with mascarpone cheese and cocoa powder",
+		"price": 70000,
+		"imageUrl": "https://i1.wp.com/eatketowithme.com/wp-content/uploads/2018/06/AdobeStock_200147807.jpg?fit=1814%2C1209&ssl=1"
+	},
+	{
+		"name": "Crème Brûlée",
+		"description": "Rich custard base topped with caramelized sugar, strawberry, and blackberry",
+		"price": 70000,
+		"imageUrl": "https://sharffmueller.com/wp-content/uploads/2018/12/MC-Vanilla-Creme-Brulee.jpg"
+	},
+	{
+		"name": "Ice Lemon Tea",
+		"description": "Freshly squeezed lemon with sugar cane syrup topped with mint leaves",
+		"price": 25000,
+		"imageUrl": "https://ampmstore.in/wp-content/uploads/2019/02/ice-tea-1.jpg"
+	},
+	{
+		"name": "Ice Lychee Tea",
+		"description": "Fresh lychee with sugar cane syrup topped with mint leaves",
+		"price": 25000,
+		"imageUrl": "https://sirclocdn.com/buminini/products/_210506102746_WhatsApp%20Image%202021-05-06%20at%2010.25.11%20(1)_zoom.jpeg"
+	}
+]

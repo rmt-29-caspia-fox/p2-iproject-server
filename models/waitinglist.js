@@ -33,11 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type:DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {msg: 'status is required'},
-        notEmpty: {msg: 'status is required'}
-      }
     },
     licenseNumber: {
       type:DataTypes.STRING,

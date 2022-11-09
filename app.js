@@ -112,6 +112,19 @@ app.post("/carts/:ProductId", async (req, res, next) => {
 	}
 });
 
+app.get("/carts", async (req, res, next) => {
+	try {
+		const UserId = req.user.id;
+		const carts = await Cart.findAll({
+			include: { model: Product },
+			where: { UserId: UserId },
+		});
+		res.status(200).json(carts);
+	} catch (err) {
+		next(err);
+	}
+});
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;

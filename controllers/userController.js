@@ -5,7 +5,8 @@ const {User} = require('../models/index')
 class userController{
   static async addUser(req, res, next){
     try {
-      const {fullName, email, password, role, phoneNumber, address} = req.body
+      const role = "Admin"
+      const {fullName, email, password, phoneNumber, address} = req.body
       const user = await User.create({fullName, email, password, role, phoneNumber, address})
       const responseData = {
         id : user.id,
@@ -57,6 +58,21 @@ class userController{
       }
       const access_token = signedToken(payload)
       res.status(200).json({access_token})
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async register(req, res, next){
+    try {
+      const role = "Customer"
+      const {fullName, email, password, phoneNumber, address} = req.body
+      const user = await User.create({fullName, email, password, role, phoneNumber, address})
+      const responseData = {
+        id : user.id,
+        email : user.email
+      }
+      res.status(201).json(responseData)
     } catch (err) {
       next(err)
     }

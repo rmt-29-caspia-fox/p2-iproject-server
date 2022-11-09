@@ -118,8 +118,40 @@ class CustomerController {
         url: `https://kitsu.io/api/edge/manga/${id}`,
       });
       console.log(result.data);
+      // console.log(result.data.data.id, "<< id");
 
       res.status(200).json(result.data);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async addBookmark(req, res, next) {
+    try {
+      const id = req.params.mangaId;
+      const dataManga = await axios({
+        method: `GET`,
+        url: `https://kitsu.io/api/edge/manga/${id}`,
+      });
+      // console.log(dataManga, "<<<<<<<<<<<<<<<< datamanga");
+      // console.log(dataManga.data, "<<<<<<<<<<<<<<<< datamanga data");
+      // console.log(dataManga.data.data.id, "<<<<<< data id belum json");
+      // console.log(
+      //   dataManga.data.data.attributes,
+      //   "<<<<<< data attributes belum json"
+      // );
+      const myJSON = JSON.stringify(dataManga.data);
+      // const myJSONid = JSON.stringify(dataManga.data.data.id);
+      // console.log(myJSON, "<<< convert json");
+      // console.log(myJSONid, "<<< convert json id");
+
+      const bookmark = await Bookmark.create({
+        UserId: req.user.id,
+        dataManga: myJSON,
+      });
+
+      // res.status(201).json(bookmark);
+      res.status(201).json(bookmark);
     } catch (error) {
       next(error);
     }

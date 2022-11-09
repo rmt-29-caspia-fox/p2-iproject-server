@@ -26,6 +26,9 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name === "invalid token" || err.name === "JsonWebTokenError") {
     code = 401;
     message = "Invalid token";
+  } else if (err.name === "already added") {
+    code = 400;
+    message = "Manga is already on the bookmarks";
   }
 
   res.status(code).json({ message });

@@ -34,12 +34,8 @@ class Decks {
   }
 
   static async inputDeck(req, res, next) {
-    const name = req.body.name
     const card = req.body.card
     try {
-      if (card.length < 40) {
-        throw new Error("Not Enough Card");
-      }
       const deck = await Deck.create({
         UserId: req.user.id,
         Cards: card

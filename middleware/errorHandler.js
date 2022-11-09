@@ -31,10 +31,6 @@ function errorHandler(err, req, res, next) {
         code = 409;
         error = err.message;
         message = "Conflict with database";
-    } else if (err.message = "Not Enough Card") {
-        code = 400;
-        message = err.message;
-        error = "Card must have minimum of 40 Cards"
     }
     res.status(code).json({ message: `${message}`, error: error })
 }

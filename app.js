@@ -95,6 +95,21 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/vehicles", (req, res) => {
+  let vehicles = [];
+  db.collection("vehicles")
+    .find()
+    .forEach((vehicle) => {
+      vehicles.push(vehicle);
+    })
+    .then(() => {
+      res.status(200).json(vehicles);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
+    });
+});
+
 app.use(async (req, res, next) => {
   try {
     const { access_token } = req.headers;
@@ -176,3 +191,12 @@ app.put("/vehicles/review/:vehicleId", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+app.get("/myrent", async(req, res) => {
+  try {
+    const rents = await db.collection("users").findOne({_id: ObjectId(req.user.id)})
+    res.status(200).json({name: rents.name, rents: rents.rent})
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error'})
+  }
+})

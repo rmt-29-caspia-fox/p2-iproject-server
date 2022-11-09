@@ -85,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
 					},
 				},
 			},
-			avatar: DataTypes.STRING,
+			avatar: DataTypes.TEXT,
 		},
 		{
 			sequelize,

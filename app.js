@@ -94,6 +94,24 @@ app.use(async (req, res, next) => {
 	}
 });
 
+app.post("/carts/:ProductId", async (req, res, next) => {
+	try {
+		const UserId = req.user.id;
+		const id = req.params.ProductId;
+		const product = await Product.findByPk(id);
+		if (!product) {
+			throw { name: "Product not found" };
+		}
+		const cart = await Cart.create({
+			UserId: UserId,
+			ProductId: id,
+		});
+		res.status(201).json(cart);
+	} catch (err) {
+		next(err);
+	}
+});
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;
@@ -117,6 +135,9 @@ app.use(async (err, req, res, next) => {
 	} else if (err.name === "Invalid token" || err.name === "JsonWebTokenError") {
 		code = 401;
 		message = "Invalid token";
+	} else if (err.name === "Product not found") {
+		code = 404;
+		message = "Product not found";
 	}
 
 	res.status(code).json({ message: message });

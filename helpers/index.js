@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.JWT_CREDENTIAL
-const SALT = process.env.HASH_CREDENTIAL
+const SALT = 10
 
 function hashedPassword(password) {
   const hashedPassword = bcrypt.hashSync(password, SALT)

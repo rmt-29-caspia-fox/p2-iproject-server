@@ -96,8 +96,9 @@ class Controller {
         throw { name: "google-signin-error" };
       }
       console.log(ticket.getPayload().email);
+      const email = ticket.getPayload().email;
       const [user, created] = await User.findOrCreate({
-        where: { email: ticket.getPayload().email },
+        where: { email },
         defaults: {
           email,
           password: "google123",

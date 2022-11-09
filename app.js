@@ -85,10 +85,10 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     if (error.name == "invalidLogin") {
       res.status(401).json({ message: "Invalid email or password" });
-    } else if(error.name == 'email_required') {
-      res.status(400).json({ message: 'Email is required'})
-    } else if(error.name == 'password_required') {
-      res.status(400).json({ message: 'Password is required'})
+    } else if (error.name == "email_required") {
+      res.status(400).json({ message: "Email is required" });
+    } else if (error.name == "password_required") {
+      res.status(400).json({ message: "Password is required" });
     } else {
       res.status(500).json({ message: "Internal server error" });
     }
@@ -165,28 +165,24 @@ app.put("/vehicles/rent", async (req, res) => {
   try {
     const { vehicleId, startDate, endDate, duration, totalPrice } = req.body;
     const paymentStatus = false;
-    await db
-      .collection("users")
-      .updateOne(
-        { _id: ObjectId(req.user.id) },
-        {
-          $push: {
-            rent: {
-              vehicleId,
-              startDate,
-              endDate,
-              duration,
-              totalPrice,
-              paymentStatus,
-            },
+    await db.collection("users").updateOne(
+      { _id: ObjectId(req.user.id) },
+      {
+        $push: {
+          rent: {
+            vehicleId,
+            startDate,
+            endDate,
+            duration,
+            totalPrice,
+            paymentStatus,
           },
-        }
-      );
-    res
-      .status(200)
-      .json({
-        message: "Success rented the vehicle. Please finish the payment.",
-      });
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Success rented the vehicle. Please finish the payment.",
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -214,11 +210,13 @@ app.put("/vehicles/review/:vehicleId", async (req, res) => {
   }
 });
 
-app.get("/myrent", async(req, res) => {
+app.get("/myrent", async (req, res) => {
   try {
-    const rents = await db.collection("users").findOne({_id: ObjectId(req.user.id)})
-    res.status(200).json({name: rents.name, rents: rents.rent})
+    const rents = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(req.user.id) });
+    res.status(200).json({ name: rents.name, rents: rents.rent });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error'})
+    res.status(500).json({ message: "Internal server error" });
   }
-})
+});

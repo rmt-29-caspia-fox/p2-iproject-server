@@ -72,6 +72,28 @@ app.get("/products", async (req, res, next) => {
 	}
 });
 
+// Authentication
+app.use(async (req, res, next) => {
+	try {
+		const { access_token } = req.headers;
+		const payload = decodeToken(access_token);
+		if (!payload) {
+			throw { name: "Invalid token" };
+		}
+
+		const user = await User.findByPk(payload.id);
+		if (!user) {
+			throw { name: "Invalid token" };
+		}
+
+		req.user = { id: user.id };
+
+		next();
+	} catch (err) {
+		next(err);
+	}
+});
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;
@@ -92,6 +114,9 @@ app.use(async (err, req, res, next) => {
 	} else if (err.name === "Invalid email/password") {
 		code = 401;
 		message = "Invalid email/password";
+	} else if (err.name === "Invalid token" || err.name === "JsonWebTokenError") {
+		code = 401;
+		message = "Invalid token";
 	}
 
 	res.status(code).json({ message: message });

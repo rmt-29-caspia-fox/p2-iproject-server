@@ -3,8 +3,14 @@ const router = require('express').Router()
 const Control = require('../controllers')
 
 router.post('/login', Control.postLogin)
-router.post('/register', Control.postLogin)
-router.post('/products', Control.postLogin)
-router.post('/product/:id', Control.postLogin)
+router.post('/register', Control.postRegister)
+// router.post('/login_google', Control.postLoginGoogle)
+router.get('/verify', Control.verify)
+
+router.get('/products', Control.getProducts)
+router.get('/product/:id', Control.getProductById)
+router.use(Control.authentification)
+router.post('/buy/:idsubproduct', Control.postBuyProduct)
+
 
 module.exports = router

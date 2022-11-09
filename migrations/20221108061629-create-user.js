@@ -21,6 +21,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      balance: {
+        allowNull: false,
+        defaultValue: 0,
+        type: Sequelize.INTEGER
+      },
+      otp: {
+        type: Sequelize.STRING
+      },
+      active: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

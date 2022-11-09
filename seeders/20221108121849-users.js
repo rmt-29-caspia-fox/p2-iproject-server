@@ -13,9 +13,12 @@ module.exports = {
       el.password = encode(el.password)
       el.createdAt = new Date()
       el.updatedAt = new Date()
+      el.active = true
       return el
     })
+
     await queryInterface.bulkInsert('Users', data)
+
   },
 
   async down (queryInterface, Sequelize) {

@@ -15,13 +15,18 @@ _Balance_
 - idUser : integer, required
 ```
 
-_LogBalance_ ##BELUM SELESAI
+_Logbalance_ ##BELUM SELESAI
 ```
-- nominal : decimal, required
+- nominal : decimal, required, (default: 0)
+- nominal_before : decimal, required, (default: 0)
 - isDebit : boolean (if true meaning add user's balance, if false meaning cut user's balance), required, (default: false)
-- type: string (topup, buy, withdraw), required
+- type: string (topup, buy, withdraw, transfer), required
 - idUser: integer, required
-- description: string, required
+- idReceiver: string
+- phone: string
+- idProduct: integer
+- idSubproduct: integer
+- description: string
 ```
 
 _Product_
@@ -49,7 +54,7 @@ List of available endpoints:
 ​
 - `POST /register`
 - `POST /login`
-- `GET / or /products`
+- `GET /products`
 - `GET /product/:id`
 
 Routes below need authentication:
@@ -240,6 +245,13 @@ _Response (403 - Forbidden)_
 ```json
 {
   "message": "You are not authorized"
+}
+```
+
+_Response (404 - Not Found)_
+```json
+{
+  "message": "Product not found"
 }
 ```
 

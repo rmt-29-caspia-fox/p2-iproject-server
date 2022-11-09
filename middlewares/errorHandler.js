@@ -23,6 +23,9 @@ const errorHandler = (err, req, res, next) => {
   } else if (err.name === "manga not found") {
     code = 400;
     message = "Manga not found";
+  } else if (err.name === "invalid token" || err.name === "JsonWebTokenError") {
+    code = 401;
+    message = "Invalid token";
   }
 
   res.status(code).json({ message });

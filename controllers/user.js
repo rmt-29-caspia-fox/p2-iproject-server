@@ -74,9 +74,29 @@ class UserController{
 
     res.status(200).json({access_token, message: `login ok` })
     } catch (error) {
-      console.log(error + `<<<<<`)
       next(error)
     }
-  } 
+  }
+  static async facebookSign(req, res, next) {
+    try {
+      let { email } = req.body;
+      const [user, created] = await User.findOrCreate({
+        where: {
+          email: email
+        },
+        defaults: {
+          username: email,
+          email: email,
+          password: 'facebook_secret',
+        }
+      })
+      const access_token = Help.generateToken({
+        id: user.id
+      })
+      res.status(200).json({access_token, message: `login ok` })
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 module.exports = UserController

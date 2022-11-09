@@ -31,6 +31,9 @@ const errorHandler = (err, req, res, next) =>{
   } else if(err.name === "product_duplicated"){
     code = 400
     message = "product already on your favorite"
+  } else if(err.name === "error_ext_api"){
+    code = 400
+    message = "api external error"
   }
   
   res.status(code).json({message})

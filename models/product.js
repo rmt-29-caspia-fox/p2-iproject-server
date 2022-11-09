@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Product.belongsTo(models.Category)
-      Product.belongsTo(models.Users)
+      Product.belongsTo(models.User)
     }
   }
   Product.init({
@@ -53,18 +53,6 @@ module.exports = (sequelize, DataTypes) => {
         min:{
           args:[150000],
           msg:"Minimum price RP 50.000,00"
-        }
-      }
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'stock  is required'
-        },
-        notNull: {
-          msg: 'stock  is required'
         }
       }
     },

@@ -5,7 +5,7 @@ class CategoryController{
     try {
       const options = {}
       options.order= [['id', 'ASC']]
-      const categories = await Category.findAndCountAll(options)
+      const categories = await Category.findAll(options)
       res.status(200).json(categories)
     } catch (error) {
       next(error)

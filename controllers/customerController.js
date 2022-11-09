@@ -141,6 +141,7 @@ class CustomerController {
       //   "<<<<<< data attributes belum json"
       // );
       const myJSON = JSON.stringify(dataManga.data);
+
       // const myJSONid = JSON.stringify(dataManga.data.data.id);
       // console.log(myJSON, "<<< convert json");
       // console.log(myJSONid, "<<< convert json id");
@@ -170,6 +171,22 @@ class CustomerController {
       }
 
       res.status(200).json(bookmarks);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async getQuotes(req, res, next) {
+    //
+
+    try {
+      const result = await axios({
+        method: `GET`,
+        url: `https://katanime.vercel.app/api/getrandom`,
+      });
+      console.log(result.data);
+      // console.log(result.data.data.id, "<< id");
+
+      res.status(200).json(result.data);
     } catch (error) {
       next(error);
     }

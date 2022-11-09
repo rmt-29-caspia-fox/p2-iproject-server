@@ -39,21 +39,12 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      role: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: { msg: "role is required" },
-          notEmpty: { msg: "role is required" },
-        },
-      },
     },
     {
       sequelize,
       modelName: "User",
       hooks:{
         beforeCreate:(instance)=>{
-          instance.role = "admin";
           instance.password = decodeBcrypt(instance.password);
         }
       }

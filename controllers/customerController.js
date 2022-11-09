@@ -14,11 +14,10 @@ class CustomerController {
   static async addWaitingList(req, res, next) {
     try {
       const CustomerId = req.params.customerid;
-      const { brand, name, status, licenseNumber, service } = req.body;
+      const { brand, name, licenseNumber, service } = req.body;
       const data = await WaitingList.create({
         brand,
         name,
-        status,
         licenseNumber,
         service,
         CustomerId,

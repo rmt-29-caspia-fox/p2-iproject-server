@@ -8,5 +8,6 @@ router.post('/register',AdminController.register)
 router.post('/login',AdminController.login)
 router.get('/waitinglists', WaitingListController.getWaitinglist)
 router.use(authentication)
+router.patch('/waitinglists/:id', WaitingListController.patchWaitlist)
 
 module.exports = router

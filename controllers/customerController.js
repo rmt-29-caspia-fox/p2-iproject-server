@@ -156,6 +156,24 @@ class CustomerController {
       next(error);
     }
   }
+
+  static async getBookmarks(req, res, next) {
+    try {
+      const bookmarks = await Bookmark.findAll({
+        where: {
+          UserId: req.user.id,
+        },
+      });
+
+      if (bookmarks.length === 0) {
+        throw { name: "bookmarks not found" };
+      }
+
+      res.status(200).json(bookmarks);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = CustomerController;

@@ -25,6 +25,22 @@ class WaitingListController {
     }
   }
 
+  static async getWaitinglistCustomer(req, res, next) {
+    try {   
+      let option = {
+        order: [["createdAt", "asc"]],
+        include: [Customer],
+        where: {},
+      };
+      option.where = { status: ['done','waiting','onprogress'] };
+
+      const data = await WaitingList.findAll(option);
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async patchWaitlist(req, res, next) {
     try {
       const { id } = req.params;
@@ -33,6 +49,15 @@ class WaitingListController {
       res.status(200).json({message: 'Waitinglist has been updated'});
     } catch (err) {
       next(err);
+    }
+  }
+
+  static async getWaitinglistById(req,res,next){
+    try {
+      const data = await WaitingList.findByPk(req.params.id,{include:[Customer]})
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
     }
   }
 }

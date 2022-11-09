@@ -28,6 +28,9 @@ const errorHandler = (err, req, res, next) => {
     }else if (err.name === "InvalidNumber") {
       code = 404
       msg = 'Number is not available'
+    }else if (err.name === "emailWrong") {
+      code = 401
+      msg = 'Error sending mail'
     }
   
     res.status(code).json({ msg });

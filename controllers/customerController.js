@@ -30,6 +30,7 @@ class CustomerController {
   }
   static async mailer(req, res, next) {
     try {
+      const { email, coordinate } = req.body;
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -40,18 +41,21 @@ class CustomerController {
 
       const mailOptions = {
         from: process.env.GMAIL_EMAIL,
-        to: process.env.GMAIL_EMAIL,
-        subject: "Subject",
-        text: "Email content",
+        to: email,
+        subject: "Route",
+        text: "you can follow this link to get route",
+        html: `
+        <h2>Hello</h2>
+        <p>you can click button below here to get route from google map</p>
+        <a href="https://www.google.com/maps/dir/-5.3631762,105.2911422/Car+Wash+Dewi+Ayu,+Jl.+Airan+Raya,+Way+Huwi,+Kec.+Jati+Agung,+Kabupaten+Lampung+Selatan,+Lampung+35131/@${coordinate}z">click here</a>
+        `,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
-        if (!error) {
-          throw {name: name}
-        } else {
-          console.log("Email sent: " + info.response);
-          // do something useful
+        if (error) {
+          throw { name: "emailWrong" };
         }
+        res.status(200).json({ message: `Email sent to: ${email}` });
       });
     } catch (err) {
       next(err);

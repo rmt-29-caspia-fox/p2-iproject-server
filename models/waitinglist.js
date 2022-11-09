@@ -69,5 +69,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'WaitingList',
   });
+
+  WaitingList.beforeCreate((inst,option)=>{
+    if(!inst.status){
+      inst.status = 'request'
+    } 
+  })
   return WaitingList;
 };

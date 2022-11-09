@@ -3,6 +3,7 @@ const author = require('../middleware/authorization');
 const route = require('express').Router();
 
 route.get('/', FavControl.getFav);
+route.post('/mail', FavControl.sendMail)
 route.post('/:heroId', FavControl.addFav);
 route.delete('/:id', author, FavControl.deleteFav);
 

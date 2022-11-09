@@ -22,6 +22,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      latitude: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      longitude: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

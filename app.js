@@ -125,6 +125,24 @@ app.get("/carts", async (req, res, next) => {
 	}
 });
 
+// Authorization
+const authorization = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const UserId = req.user.id;
+		const cart = await Cart.findByPk(id);
+		if (!cart) {
+			throw { name: "Product not found" };
+		}
+		if (UserId !== cart.UserId) {
+			throw { name: "You are not authorized" };
+		}
+		next();
+	} catch (err) {
+		next(err);
+	}
+};
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;
@@ -151,6 +169,9 @@ app.use(async (err, req, res, next) => {
 	} else if (err.name === "Product not found") {
 		code = 404;
 		message = "Product not found";
+	} else if (err.name === "You are not authorized") {
+		code = 403;
+		message = "You are not authorized";
 	}
 
 	res.status(code).json({ message: message });

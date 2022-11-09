@@ -1,0 +1,97 @@
+{
+  "categories" : [{
+    "name": "Mono Chrome"
+  }, {
+    "name": "Autumn Series"
+  }, {
+    "name": "Spring Series"
+  }, {
+    "name": "Simple"
+  }],
+  "users" : [{
+    "fullName": "Syauqi",
+    "email": "syauqi@mail.com",
+    "password": "123456",
+    "role": "Admin",
+    "phoneNumber": "854-525-8066",
+    "address": "942 4th Drive"
+  }, {
+    "fullName": "ahmad",
+    "email": "ahmad@mail.com",
+    "password": "123456",
+    "role": "Admin",
+    "phoneNumber": "854-525-8066",
+    "address": "942 4th Drive"
+  }],
+  "products" : [{
+    "name": "Timeless Boho Wedding Invitation Set",
+    "description": "Poisoning by antipruritics",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/iEO31h6.jpg",
+    "CategoryId": 1,
+    "UserId": 1
+  }, {
+    "name": "Timeless Mono Wedding Invitation Set",
+    "description": "Obstetrical pyemic and septic embolism, antepartum condition or complication",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/kPGUTwF.jpg",
+    "CategoryId": 1,
+    "UserId": 1
+  }, {
+    "name": "Cream Wedding Invitation Set",
+    "description": "Osteoarthrosis, localized, not specified whether primary or secondary, shoulder region",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/k00UHSa.jpg",
+    "CategoryId": 1,
+    "UserId": 1
+  }, {
+    "name": "Black and White Wedding Invitation Set",
+    "description": "Other disorders of lipoid metabolism",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/8f3qClL.jpg",
+    "CategoryId": 2,
+    "UserId": 2
+  }, {
+    "name": "Wedding Invitation card Set",
+    "description": "Embryonic cyst of fallopian tubes and broad ligaments",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/xVxHHz3.jpg",
+    "CategoryId": 2,
+    "UserId": 2
+  }, {
+    "name": "Cream Wedding Invitation Set",
+    "description": "Circumscribed scleroderma",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/TJ7f5Xy.jpg",
+    "CategoryId": 2,
+    "UserId": 2
+  }, {
+    "name": "Coffee theme Wedding Invitation",
+    "description": "Routine gynecological examination",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/HnqVSxG.jpg",
+    "CategoryId": 3,
+    "UserId": 1
+  }, {
+    "name": "Raw Style  Wedding Invitation Set",
+    "description": "Thoracoabdominal aortic ectasia",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/h58byFu.jpg",
+    "CategoryId": 3,
+    "UserId": 2
+  }, {
+    "name": "Green Wedding Invitation Set",
+    "description": "Eversion of lacrimal punctum",
+    "price": 155000,
+    "imgUrl": "https://i.imgur.com/h58byFu.jpg",
+    "CategoryId": 3,
+    "UserId": 1
+  }, {
+    "name": "Lemonade Wedding Invitation Set",
+    "description": "Infection with microorganisms resistant to tetracyclines",
+    "price": 15500,
+    "imgUrl": "https://i.imgur.com/myLqSb6.jpg",
+    "CategoryId": 1,
+    "UserId": 2
+  }]
+}

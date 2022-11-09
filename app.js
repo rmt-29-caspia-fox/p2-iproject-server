@@ -110,6 +110,28 @@ app.get("/vehicles", (req, res) => {
     });
 });
 
+// app.post("/vehicles/add", async(req, res) => {
+//   try {
+//     const vehicles = req.body
+//     await db.collection("vehicles").insertMany(vehicles)
+//     res.status(201).json({message: 'Success add vehicles'})
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ message: 'Internal server error'})
+//   }
+// })
+
+// app.post("/users/add", async(req, res) => {
+//   try {
+//     const users = req.body
+//     await db.collection("users").insertMany(users)
+//     res.status(201).json({message: 'Success add vehicles'})
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ message: 'Internal server error'})
+//   }
+// })
+
 app.use(async (req, res, next) => {
   try {
     const { access_token } = req.headers;

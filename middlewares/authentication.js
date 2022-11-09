@@ -3,6 +3,7 @@ const { User } = require("../models");
 
 const authentication = async (req, res, next) => {
   try {
+		console.log('masukk siniiii');
     const { access_token } = req.headers;
 
     if (!access_token) {
@@ -19,7 +20,7 @@ const authentication = async (req, res, next) => {
 
     req.user = {
       id: user.id,
-      role: user.role,
+			email: user.email
     };
 
     next();

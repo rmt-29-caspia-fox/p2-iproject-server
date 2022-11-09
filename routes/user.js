@@ -6,8 +6,6 @@ router.post('/login', UserController.userLogin)
 
 router.post('/register', UserController.userRegister)
 
-router.get('/register', UserController.userRegister)
-
 
 
 

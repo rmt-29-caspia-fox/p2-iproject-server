@@ -21,10 +21,10 @@ class UserController {
 
       const payload = {
         id: user.id,
+				email: user.email
       };
 
       const access_token = encode(payload);
- 
       res.status(200).json({ access_token });
     } catch (error) {
       next(error);

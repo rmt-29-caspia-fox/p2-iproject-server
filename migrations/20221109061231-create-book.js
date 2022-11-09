@@ -26,10 +26,10 @@ module.exports = {
         type: Sequelize.DATE
       },
       isbn13: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       isbn10: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       pages: {
         type: Sequelize.INTEGER

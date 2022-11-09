@@ -85,15 +85,68 @@ app.post("/login", async (req, res) => {
   } catch (error) {
     if (error.name == "invalidLogin") {
       res.status(401).json({ message: "Invalid email or password" });
-    } else if(error.name == 'email_required') {
-      res.status(400).json({ message: 'Email is required'})
-    } else if(error.name == 'password_required') {
-      res.status(400).json({ message: 'Password is required'})
+    } else if (error.name == "email_required") {
+      res.status(400).json({ message: "Email is required" });
+    } else if (error.name == "password_required") {
+      res.status(400).json({ message: "Password is required" });
     } else {
       res.status(500).json({ message: "Internal server error" });
     }
   }
 });
+
+app.get("/vehicles", (req, res) => {
+  let vehicles = [];
+  db.collection("vehicles")
+    .find()
+    .forEach((vehicle) => {
+      vehicles.push(vehicle);
+    })
+    .then(() => {
+      res.status(200).json(vehicles);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
+    });
+});
+
+app.get("/vehicles/:id", async(req, res) => {
+  try {
+    const car = await db.collection("vehicles").findOne({_id: ObjectId(req.params.id)})
+    if(!car) {
+      throw { name: 'notFound'}
+    }
+    res.status(200).json(car)
+  } catch (error) {
+    if(error.name == 'notFound') {
+      res.status(404).json({ message: 'Vehicle is not found'})
+    } else {
+      res.status(500).json({ message: 'Internal server error'})
+    }
+  }
+})
+
+// app.post("/vehicles/add", async(req, res) => {
+//   try {
+//     const vehicles = req.body
+//     await db.collection("vehicles").insertMany(vehicles)
+//     res.status(201).json({message: 'Success add vehicles'})
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ message: 'Internal server error'})
+//   }
+// })
+
+// app.post("/users/add", async(req, res) => {
+//   try {
+//     const users = req.body
+//     await db.collection("users").insertMany(users)
+//     res.status(201).json({message: 'Success add vehicles'})
+//   } catch (error) {
+//     console.log(error)
+//     res.status(500).json({ message: 'Internal server error'})
+//   }
+// })
 
 app.use(async (req, res, next) => {
   try {
@@ -128,28 +181,24 @@ app.put("/vehicles/rent", async (req, res) => {
   try {
     const { vehicleId, startDate, endDate, duration, totalPrice } = req.body;
     const paymentStatus = false;
-    await db
-      .collection("users")
-      .updateOne(
-        { _id: ObjectId(req.user.id) },
-        {
-          $push: {
-            rent: {
-              vehicleId,
-              startDate,
-              endDate,
-              duration,
-              totalPrice,
-              paymentStatus,
-            },
+    await db.collection("users").updateOne(
+      { _id: ObjectId(req.user.id) },
+      {
+        $push: {
+          rent: {
+            vehicleId,
+            startDate,
+            endDate,
+            duration,
+            totalPrice,
+            paymentStatus,
           },
-        }
-      );
-    res
-      .status(200)
-      .json({
-        message: "Success rented the vehicle. Please finish the payment.",
-      });
+        },
+      }
+    );
+    res.status(200).json({
+      message: "Success rented the vehicle. Please finish the payment.",
+    });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -172,6 +221,17 @@ app.put("/vehicles/review/:vehicleId", async (req, res) => {
         { $push: { reviews: { userId, name, msg, rating } } }
       );
     res.status(200).json({ message: "Success reviewed" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/myrent", async (req, res) => {
+  try {
+    const rents = await db
+      .collection("users")
+      .findOne({ _id: ObjectId(req.user.id) });
+    res.status(200).json({ name: rents.name, rents: rents.rent });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }

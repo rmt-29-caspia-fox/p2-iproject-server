@@ -62,7 +62,9 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {msg: 'CustomerId is required'},
         notEmpty: {msg: 'CustomerId is required'}
       }
-    }
+    },
+    createdAt : DataTypes.DATE,
+    updatedAt : DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'WaitingList',

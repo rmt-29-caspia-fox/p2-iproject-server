@@ -1,6 +1,10 @@
 const axios = require("axios");
 const { OAuth2Client } = require("google-auth-library");
+const { google } = require("googleapis");
 const { User } = require("../models");
+const keys = require("../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json");
+
+
 
 class Controller {
   static async register(req, res, next) {
@@ -18,24 +22,24 @@ class Controller {
   static async googleLogin(req, res, next) {
     try {
       // console.log("masuk login google");
-      const CLIENT_ID =
-        "520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com";
+      const keys = require("../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json");
+      const CLIENT_ID = keys.web.client_id;
       const google_token = req.headers.google_token;
       const client = new OAuth2Client(CLIENT_ID);
       const ticket = await client.verifyIdToken({
         idToken: google_token,
-        audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        audience: CLIENT_ID,
       });
-      if(!ticket){
-        throw {name:"google-signin-error"}
-      }
-      const scope = "https://www.googleapis.com/auth/books";
-      const authorizeUrl = oAuth2Client.generateAuthUrl({
-        access_type: "offline",
-        scope: "https://www.googleapis.com/auth/userinfo.profile",
-      });
+      if (!ticket) {
+        throw { name: "google-signin-error" };
+      } 
+      // const scope = "https://www.googleapis.com/auth/books";
+      // const authorizeUrl = ticket.generateAuthUrl({
+      //   access_type: "offline",
+      //   scope,
+      // });
+      // console.log(authorizeUrl);
+      
       // const payload = ticket.getPayload();
       // console.log(ticket);
       // res.status(200).json(payload)
@@ -58,6 +62,32 @@ class Controller {
       next(error);
     }
   }
+  
+  static async constentPage(req, res, next) {
+    try {
+      const keys = require("../client_secret_520817930211-gca4lbhljg4gguj40k363qj0gup872n5.apps.googleusercontent.com.json");
+      const oauth2Client = new google.auth.OAuth2(
+        keys.web.client_id,
+        keys.web.client_secret,
+        "http://localhost:3000/oauth2callback"
+      );
+      const scopes = ["https://www.googleapis.com/auth/books"];
+      const authorizationUrl = oauth2Client.generateAuthUrl({
+        // 'online' (default) or 'offline' (gets refresh_token)
+        access_type: "offline",
+        /** Pass in the scopes array defined above.
+         * Alternatively, if only one scope is needed, you can pass a scope URL as a string */
+        scope: scopes,
+        // Enable incremental authorization. Recommended as a best practice.
+        include_granted_scopes: true,
+      });
+      console.log(authorizationUrl);
+      res.status(200).json({ Location: authorizationUrl });
+      // res.status(301).json({ Location: authorizationUrl });
+    } catch (error) {
+      next(error);
+    }
+  }
   static async gSearch(req, res, next) {
     try {
       const { query, pageNum } = req.body;
@@ -74,32 +104,26 @@ class Controller {
         url: `https://www.googleapis.com/books/v1/volumes`,
         params: {
           q: arrQ,
-          maxResults,
+          // maxResults,
           langRestrict: "en",
           // filter:"free-ebooks",
           startIndex,
         },
       });
       // console.log(data.items);
+      const title = query.toLowerCase().split(" ").join("%20");
+      // console.log(title, "<<<RESPONSE");
+      const response = await axios({
+        method: "get",
+        url: "https://gutendex.com/books",
+        params: {
+          search: title,
+        },
+      });
+      // console.log(response.data, "<<<RESPONSE");
+      const total = { googleBooks:data, gutenberg: response.data };
 
-      for (let i = 0; i < data.items.length; i++) {
-        const title = data.items[i].volumeInfo.title;
-        if (title) {
-          title.toLowerCase().split(" ").join("%20");
-          const response = await axios({
-            method: "get",
-            url: "https://gutendex.com/books",
-            params: {
-              search: title,
-            },
-          });
-          if (response.data.count > 0) {
-            data.items[i].volumeInfo.gutenberg = response.data.results[0];
-          }
-        }
-      }
-
-      res.status(200).json(data);
+      res.status(200).json(total);
     } catch (error) {
       next(error);
     }

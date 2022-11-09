@@ -18,7 +18,7 @@ const errorHandler = (error, req, res, next) => {
   }else if (error.name === "user_not_authorized") {
     code = 403;
     message = "User not authorized";
-  } else if (error.name === "product_not_found") {
+  } else if (error.name === "book_not_found") {
     code = 404;
     message = error.message;
   } else if (error.name === "category_not_found") {
@@ -26,7 +26,7 @@ const errorHandler = (error, req, res, next) => {
     message = error.message;
   } else if (error.name === "SequelizeForeignKeyConstraintError") {
     code = 404
-    message = "can't add product to wishlist -- product not found"
+    message = "can't add book to wishlist -- book not found"
   } else if (error.name === "email_required") {
     code = 400
     message = "email required"

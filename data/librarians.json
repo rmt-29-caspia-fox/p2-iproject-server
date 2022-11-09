@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "The",
+    "lastName": "Qwerty",
+    "email": "qwerty@mail.com",
+    "password": "qwerty",
+    "phoneNumber": "1234567890",
+    "role": "Admin"
+  },
+  {
+    "firstName": "The",
+    "lastName": "Staff",
+    "email": "staffMagang@mail.com",
+    "password": "staff",
+    "phoneNumber": "1234567890",
+    "role": "Staff"
+  }
+]

@@ -22,11 +22,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg: "Name required",
+          msg: "Title required",
         },
         notEmpty: {
           args: true,
-          msg: "Name required",
+          msg: "Title required",
         },
       }
     },
@@ -42,6 +42,16 @@ module.exports = (sequelize, DataTypes) => {
     CategoryId: {
       allowNull: false,
       type: DataTypes.INTEGER,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Category required",
+        },
+        notEmpty: {
+          args: true,
+          msg: "Category required",
+        },
+      },
       references: {
         model: 'Categories',
         key: 'id'

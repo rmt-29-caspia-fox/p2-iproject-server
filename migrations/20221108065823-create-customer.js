@@ -15,8 +15,13 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING
+      },
+      longitude:{
+        type: Sequelize.STRING 
+      },
+      latitude:{
+        type: Sequelize.STRING 
       },
       createdAt: {
         allowNull: false,

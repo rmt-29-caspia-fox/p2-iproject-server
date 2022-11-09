@@ -4,8 +4,7 @@ const router = require('express').Router()
 
 //=> /customers/....
 router.post('/register',CustomerController.register)
-router.get('/waitinglists', WaitingListController.getWaitinglist)
+router.get('/waitinglists', WaitingListController.getWaitinglistCustomer)
 router.post('/waitinglists/:customerid',CustomerController.addWaitingList)
-router.post('/mailer', CustomerController.mailer)
 
 module.exports = router

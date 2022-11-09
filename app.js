@@ -143,6 +143,22 @@ const authorization = async (req, res, next) => {
 	}
 };
 
+app.delete("/carts/:id", authorization, async (req, res, next) => {
+	try {
+		const id = req.params.id;
+		const cart = await Cart.findByPk(id);
+		if (!cart) {
+			throw { name: "Product not found" };
+		}
+		await Cart.destroy({
+			where: { id: id },
+		});
+		res.status(200).json({ message: "Product has been removed from cart" });
+	} catch (err) {
+		next(err);
+	}
+});
+
 // Error Handler
 app.use(async (err, req, res, next) => {
 	let code = 500;

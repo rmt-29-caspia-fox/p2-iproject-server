@@ -1,5 +1,6 @@
 const {User} = require('../models');
 const Help = require('../helpers');
+const {OAuth2Client} = require('google-auth-library');
 
 class UserController{
   static async register(req, res, next) {
@@ -47,5 +48,35 @@ class UserController{
       next(err)
     }
   }
+
+  static async googleSign(req, res, next) {
+    try {
+      const google_token = req.headers.google_token
+      const client = new OAuth2Client(process.env.CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: google_token,
+        audience: process.env.CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const [user, created] = await User.findOrCreate({
+      where : {email: payload.email},
+      defaults: {
+        username: payload.given_name,
+        email: payload.email,
+        password: 'google_secret',
+      },
+      hooks: false
+    })
+
+    const access_token = Help.generateToken({
+      id: user.id
+    })
+
+    res.status(200).json({access_token, message: `login ok` })
+    } catch (error) {
+      console.log(error + `<<<<<`)
+      next(error)
+    }
+  } 
 }
 module.exports = UserController

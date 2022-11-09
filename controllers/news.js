@@ -29,7 +29,7 @@ class NewsController {
     try {
       let key = process.env.API_KEY
       const {data} = await axios({
-        url: `https://newsapi.org/v2/everything?q=covid&pageSize=20&page=1&apiKey=${key}`,
+        url: `https://newsapi.org/v2/top-headlines?country=id&apiKey=${key}`,
         method: `get`,
       })
       res.status(200).json(data)

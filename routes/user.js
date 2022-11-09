@@ -4,6 +4,6 @@ const router = require('express').Router();
 
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
-// router.post('/register', )
+router.post('/sign-google',UserController.googleSign)
 
 module.exports = router

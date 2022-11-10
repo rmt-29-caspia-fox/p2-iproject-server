@@ -1,4 +1,5 @@
-const io = require("socket.io")(3030, {
+const server = require('http').createServer();
+const io = require("socket.io")(server, {
   cors: {
     origin: [process.env.CLIENT_URL],
     methods: ["GET", "POST"],
@@ -8,4 +9,4 @@ const io = require("socket.io")(3030, {
   allowEIO3: true,
 });
 
-module.exports = io;
+module.exports = {io,server};

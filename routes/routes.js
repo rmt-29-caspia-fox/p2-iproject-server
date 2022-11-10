@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const decks = require('./decks.js')
 const User = require('../controllers/User');
+const Decks = require('../controllers/Decks')
 const authentication = require('../middleware/authentication');
 const axios = require('axios');
 
 router.post('/register', User.Register);
 router.post('/google-sign-in', User.Google);
-router.post('/auth/discord', User.Discord);
+router.get('/discord', User.Discord);
 router.post('/login', User.Login);
+router.get('/download/:id', Decks.downloadDeck);
 router.get('/cards', async (req, res, next) => {
   const { fname } = req.query
   try {

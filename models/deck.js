@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Deck.init({
     UserId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
     Cards: DataTypes.ARRAY(DataTypes.STRING)
   }, {
     sequelize,

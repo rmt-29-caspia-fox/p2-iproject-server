@@ -2,14 +2,14 @@ const { decodePassword } = require('../helpers/bcrypt');
 const { encodeToken } = require('../helpers/jwt');
 const { User } = require('../models');
 const { OAuth2Client } = require('google-auth-library');
-const { default: axios } = require('axios');
-const CLIENT_ID = process.env.CLIENT_ID
+const DiscordOauth2 = require('discord-oauth2')
+const axios = require('axios');
+
 
 class Users {
   static async Register(req, res, next) {
     const { username, email, password, phoneNumber } = req.body
     try {
-      console.log(username, email, password, phoneNumber)
       const user = await User.create({
         username, email, password, phoneNumber
       });
@@ -52,28 +52,35 @@ class Users {
   }
 
   static async Google(req, res, next) {
+    const { google_token } = req.headers
+    let access_token;
     try {
-      const google_token = req.headers.google_token
-      const client = new OAuth2Client(CLIENT_ID);
-      const ticket = await client.verifyIdToken({
-        idToken: google_token,
-        audience: CLIENT_ID
-      });
-      const payload = ticket.getPayload();
+      const client = new OAuth2Client({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        redirectUri: "https://dbuilder-iproject.web.app"
+      })
+
+      let { tokens } = await client.getToken(google_token)
+      client.setCredentials({
+        access_token: tokens.access_token
+      })
+      const userinfo = await client.request({
+        url: 'https://www.googleapis.com/oauth2/v3/userinfo'
+      })
       let user;
       [user] = await User.findOrCreate({
         where: {
-          email: payload.email
+          email: userinfo.data.email
         },
         defaults: {
-          username: payload.given_name,
-          email: payload.email,
+          username: userinfo.data.given_name,
+          email: userinfo.data.email,
           password: 'google_auth',
-          role: "Staff",
         },
         hooks: false
       })
-      const access_token = encodeToken({
+      access_token = encodeToken({
         id: user.id
       })
       res.status(200).json({ message: "Login OK", access_token })
@@ -83,52 +90,27 @@ class Users {
   }
 
   static async Discord(req, res, next) {
-    const { code } = req.query
+    const { username, email } = req.query
+    let user;
     try {
-      const { data } = await axios({
-        method: "post",
-        url: "https://discord.com/api/oauth2/token",
-        params: {
-          client_id: process.env.DISCORD_CLIENT_ID,
-          client_secret: process.env.DISCORD_CLIENT_SECRET,
-          grant_type: 'authorization_code',
-          code: code,
-          redirect_uri: "http://localhost:3000/auth/discord"
-        }
-      })
-      const { access_token, token_type } = data
-      const userResponse = await axios({
-        method: "get",
-        url: 'https://discord.com/api/users/@me',
-        headers: {
-          authorization: `${token_type} ${access_token}`
-        }
-      })
-      const payload = {
-        username: userResponse.data.username,
-        email: userResponse.data.email,
-      }
-      let user;
       [user] = await User.findOrCreate({
         where: {
-          email: payload.email
+          email: email
         },
         defaults: {
-          username: payload.username,
-          email: payload.email,
+          username: username,
+          email: email,
           password: 'discord_auth'
         },
         hooks: false
       })
-
-      access_token = encodeToken({
+      const access_token = encodeToken({
         id: user.id
       })
-      res.status(200).json({ message: "Login OK", access_token })
+      res.status(200).json({ access_token: access_token })
     } catch (err) {
       next(err)
     }
   }
 }
-
 module.exports = Users;

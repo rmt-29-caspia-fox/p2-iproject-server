@@ -1,5 +1,4 @@
 const { Deck } = require('../models');
-const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 
@@ -21,13 +20,7 @@ class Decks {
     const { id } = req.params
     try {
       const deck = await Deck.findByPk(id)
-      let deckquery = deck.Cards.join(',');
-      const { data } = await axios({
-        method: "get",
-        url: "https://db.ygoprodeck.com/api/v7/cardinfo.php",
-        params: { id: deckquery }
-      })
-      res.status(200).json({ message: "OK", detail: data })
+      res.status(200).json({ message: "OK", detail: deck })
     } catch (err) {
       next(err)
     }
@@ -35,8 +28,10 @@ class Decks {
 
   static async inputDeck(req, res, next) {
     const card = req.body.card
+    const name = req.body.name
     try {
       const deck = await Deck.create({
+        name: name,
         UserId: req.user.id,
         Cards: card
       })
@@ -48,6 +43,7 @@ class Decks {
 
   static async editDeck(req, res, next) {
     const { id } = req.params
+    const name = req.body.name
     const card = req.body.card
     try {
       const deck = await Deck.findByPk(id);
@@ -55,7 +51,8 @@ class Decks {
         throw new Error("Deck Not Found")
       }
       await Deck.update({
-        Cards: card
+        Cards: card,
+        name: name
       }, {
         where: {
           id: id
@@ -115,7 +112,6 @@ ${deck.Cards.join('\n')}
         })
       }
     } catch (err) {
-      console.log(err);
       next(err);
     }
   }

@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Pulsa XL",
+        "description": "Pulsa XL dari harga 5ribu sampai 100ribu",
+        "imageUrl": "xl.png"
+    },
+    {
+        "name": "Pulsa Three",
+        "description": "Pulsa Three dari harga 5ribu sampai 100ribu",
+        "imageUrl": "three.png"
+    },
+    {
+        "name": "Pulsa Indosat",
+        "description": "Pulsa Indosat dari harga 5ribu sampai 100ribu",
+        "imageUrl": "indosat.png"
+    },
+    {
+        "name": "Pulsa Telkomsel",
+        "description": "Pulsa Telkomsel dari harga 5ribu sampai 100ribu",
+        "imageUrl": "telkomsel.png"
+    },
+    {
+        "name": "Pulsa Smartfren",
+        "description": "Pulsa Smartfren dari harga 5ribu sampai 100ribu",
+        "imageUrl": "smartfren.png"
+    }
+]

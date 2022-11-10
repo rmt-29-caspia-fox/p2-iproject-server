@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 // const axios = require("axios");
-// const midtransClient = require("midtrans-client");
+const midtransClient = require("midtrans-client");
 const fs = require("fs");
 const { hashPassword, comparePassword } = require("./helpers/bcrypt");
 const { encodeToken, decodeToken } = require("./helpers/jwt");
@@ -61,10 +61,15 @@ app.post("/login", async (req, res, next) => {
 		if (!validation) {
 			throw { name: "Invalid email/password" };
 		}
-
-		const access_token = encodeToken({ id: user.id });
-
-		res.status(200).json({ access_token });
+		const access_token = encodeToken({
+			id: user.id,
+		});
+		res.status(200).json({
+			access_token: access_token,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			email: user.email,
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -83,7 +88,7 @@ app.post("/google-sign-in", async (req, res, next) => {
 			//[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
 		});
 		const payload = ticket.getPayload();
-		console.log(payload);
+		console.log("<<<<<<< PAYLOAD", payload);
 		// Untuk user yang login dengan Google, kita perlu cek, apakah si user sudah terdaftar di database atau belum dengan informasi yang ada di payload. --- contoh payload.email
 		// Jika user belum terdaftar, maka Create User
 		// Jika user sudah terdaftar, maka Generate access_token untuk login
@@ -91,8 +96,8 @@ app.post("/google-sign-in", async (req, res, next) => {
 		const [user, created] = await User.findOrCreate({
 			where: { email: payload.email },
 			defaults: {
-				firstName: "coba1",
-				lastName: "coba2",
+				firstName: payload.given_name,
+				lastName: payload.family_name,
 				email: payload.email,
 				password: payload.name + "_google",
 				phoneNumber: "999",
@@ -104,7 +109,12 @@ app.post("/google-sign-in", async (req, res, next) => {
 			id: user.id,
 		});
 
-		res.status(200).json({ access_token });
+		res.status(200).json({
+			access_token: access_token,
+			firstName: payload.given_name,
+			lastName: payload.family_name,
+			email: payload.email,
+		});
 	} catch (err) {
 		next(err);
 	}
@@ -218,58 +228,40 @@ app.delete("/carts/:id", authorization, async (req, res, next) => {
 	}
 });
 
-// app.get("/carts/payment", async (req, res, next) => {
-// 	try {
-// 		let getCurrentTimestamp = () => {
-// 			return "" + Math.round(new Date().getTime() / 1000);
-// 		};
-// 		await axios({
-// 			// Below is the API URL endpoint
-// 			url: "https://app.sandbox.midtrans.com/snap/v1/transactions",
-// 			method: "post",
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 				Accept: "application/json",
-// 				Authorization:
-// 					"Basic " +
-// 					Buffer.from("SB-Mid-server-Hgx1_XJ42nh0NHrjvpV4pkm-").toString(
-// 						"base64"
-// 					),
-// 				// Above is API server key for the Midtrans account, encoded to base64
-// 			},
-// 			data:
-// 				// Below is the HTTP request body in JSON
-// 				{
-// 					transaction_details: {
-// 						order_id: "order-csb-" + getCurrentTimestamp(),
-// 						gross_amount: 10000,
-// 					},
-// 					credit_card: {
-// 						secure: true,
-// 					},
-// 					customer_details: {
-// 						first_name: "Johny",
-// 						last_name: "Kane",
-// 						email: "testmidtrans@mailnesia.com",
-// 						phone: "08111222333",
-// 					},
-// 				},
-// 		}).then(
-// 			(snapResponse) => {
-// 				let snapToken = snapResponse.data.token;
-// 				console.log("Retrieved snap token:", snapToken);
-// 				// Pass the Snap Token to frontend, render the HTML page
-// 				res.status(200).json({ token: snapToken });
-// 			},
-// 			(error) => {
-// 				res.status(400).json({ message: `Fail to call API w/ error ${error}` });
-// 				console.log(error);
-// 			}
-// 		);
-// 	} catch (err) {
-// 		next(err);
-// 	}
-// });
+app.post("/midtrans-transaction-token", async (req, res, next) => {
+	try {
+		let snap = new midtransClient.Snap({
+			// Set to true if you want Production Environment (accept real transaction).
+			isProduction: false,
+			serverKey: process.env.MIDTRANS_SERVER_KEY,
+		});
+
+		const order_id = "TRANS_" + new Date().getTime();
+		console.log(">>>>>>", req.body);
+		let parameter = {
+			transaction_details: {
+				order_id: order_id, // isi order_id dengan value yang unique untuk tiap transaction
+				gross_amount: req.body.price, // harga total transaction (jika untuk keperluan bayar beberapa item maka tinggal di total harga2 nya)
+			},
+			credit_card: {
+				secure: true,
+			},
+			customer_details: {
+				first_name: req.body.firstName,
+				last_name: req.body.lastName,
+				// email: "budi@mail.com",
+				// phone: "08111222333",
+			},
+		};
+
+		const transaction = await snap.createTransaction(parameter);
+
+		res.status(201).json({ transaction });
+	} catch (err) {
+		console.log(err);
+		next(err);
+	}
+});
 
 // Error Handler
 app.use(async (err, req, res, next) => {
@@ -300,6 +292,9 @@ app.use(async (err, req, res, next) => {
 	} else if (err.name === "You are not authorized") {
 		code = 403;
 		message = "You are not authorized";
+	} else if (err.name === "MidtransError") {
+		code = err.httpStatusCode;
+		message = err.ApiResponse.error_messages[0];
 	}
 
 	res.status(code).json({ message: message });

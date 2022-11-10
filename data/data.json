@@ -8,6 +8,23 @@
   }, {
     "name": "Simple"
   }],
+  "papers" : [{
+    "name": "Blues White - A5",
+    "description": "Having a smooth texture and is similar to the characteristics on drawing paper, this material can also be an invitation paper and your greeting card.",
+    "price": "1550",
+    "status": "active"
+  }, {
+    "name": "Fancy Constellation Snow - A5",
+    "description": "Contellation Snow paper is classified as premium material that is able to give an elegant impression on the invitation or greeting card that you send.",
+    "price": "2000",
+    "status": "active"
+  }, {
+
+    "name": "Art Carton - A5",
+    "description": "Art carton invitation paper is a type of paper that is commonly used in printing and has a variety of thicknesses that you can adjust.",
+    "price": "1250",
+    "status": "active"
+  }],
   "users" : [{
     "fullName": "Syauqi",
     "email": "syauqi@mail.com",

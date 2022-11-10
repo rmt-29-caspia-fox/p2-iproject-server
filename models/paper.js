@@ -26,30 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    size: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'size is required'
-        },
-        notNull: {
-          msg: 'size is required'
-        }
-      }
-    },
-    thickness: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: 'thickness is required'
-        },
-        notNull: {
-          msg: 'thickness is required'
-        }
-      }
-    },
     description: {
       type: DataTypes.STRING,
       allowNull: false,

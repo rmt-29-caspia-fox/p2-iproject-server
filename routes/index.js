@@ -4,7 +4,7 @@ const Control = require('../controllers')
 
 router.post('/login', Control.postLogin)
 router.post('/register', Control.postRegister)
-router.post('/login_google', Control.postLoginGoogle)
+router.post('/login-google', Control.postLoginGoogle)
 router.get('/verify', Control.verify)
 
 router.get('/products', Control.getProducts)

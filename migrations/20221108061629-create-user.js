@@ -21,6 +21,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      address: {
+        type: Sequelize.STRING
+      },
+      phone: {
+        type: Sequelize.STRING
+      },
       balance: {
         allowNull: false,
         defaultValue: 0,

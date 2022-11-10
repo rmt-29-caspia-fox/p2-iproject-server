@@ -10,13 +10,19 @@ const base_url = 'http://localhost:3000'
 
 const client_url = 'http://localhost:5173'
 
+const {OAuth2Client} = require('google-auth-library');
+
+// const CLIENT_ID = process.env.google_client_id
+
+const CLIENT_ID = "735076616915-hhbp1h5ljou53injvu1h27tdkp54et8r.apps.googleusercontent.com"
+
 class Control {
 
 	static async postLoginGoogle(req, res, next){
 		try {
 			const google_token = req.headers.google_token
-			console.log(google_token);
-			console.log(CLIENT_ID);
+			// console.log(google_token);
+			// console.log(CLIENT_ID);
 			const client = new OAuth2Client(CLIENT_ID);
 			const ticket = await client.verifyIdToken({
 				idToken: google_token,
@@ -25,26 +31,61 @@ class Control {
 			const payload = ticket.getPayload();
 			// res.status(200).json({payload})
 			let email = payload.email
+
+			var password = '';
+			var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var charactersLength = characters.length;
+			for ( var i = 0; i < 12; i++ ) {
+				password += characters.charAt(Math.floor(Math.random() * charactersLength));
+			}
+
 			const [user, created] = await User.findOrCreate({
 				where: {
 					email: email
 				},
 				defaults: {
 					email: payload.email,
-					role: 'Staff',
 					username: payload.given_name,
-					password: 'auth_google'
+					password: encode(password),
+					active: true
 				},
 				hooks: false
 			})
 
 			let payload_jwt = {
-				id: findUser.id,
-				email: findUser.email,
-				username: findUser.username
+				id: user.id,
+				email: user.email,
+				username: user.username
 			}
 
-			let access_token = encode(payload_jwt)
+			let access_token = jwtSign(payload_jwt)
+
+			
+			if(created){
+
+				var transporter = nodemailer.createTransport({
+					service: 'gmail',
+					auth: {
+						user: 'magicandgun@gmail.com',
+						pass: process.env.pass_mail
+					}
+				});
+				
+				var mailOptions = {
+					from: 'magicandgun@gmail.com',
+					to: user.email,
+					subject: 'Anda telah melakukan registrasi di Pulsa Osi',
+					text: `Selamat email anda telah terdaftar di web kami, password anda adalah ${password}.`
+				};
+				
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+				});
+			}
 
 			res.status(200).json({
 				access_token
@@ -149,6 +190,8 @@ class Control {
 				email: data.email,
 				password: data.password,
 				username: data.username,
+				phone: data.phone,
+				address: data.address,
 				otp: data.otp
 			})
 

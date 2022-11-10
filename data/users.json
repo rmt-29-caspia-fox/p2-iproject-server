@@ -1,12 +1,9 @@
 [
     {
-        "username": "Ressy",
-        "email": "awressy@gmail.com",
-        "password": "meongmacan"
-    },
-    {
         "username": "Sir Meong",
         "email": "meong@gmail.com",
-        "password": "meongmacan"
+        "password": "meongmacan",
+        "phone": "089687101195",
+        "address": "Provinsi Jawa Timur, Kabupaten Gresik, Kecamatan Sidayu, Ngawen"
     }
 ]

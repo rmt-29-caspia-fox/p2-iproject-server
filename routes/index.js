@@ -11,6 +11,7 @@ router.get('/products', Control.getProducts)
 router.get('/product/:id', Control.getProductById)
 router.use(Control.authentification)
 router.get('/user', Control.getUser)
+router.post('/topup', Control.postTopup)
 router.post('/buy/:idsubproduct', Control.postBuyProduct)
 
 

@@ -344,9 +344,21 @@ class Control {
 
 	static async postTopup(req, res, next){
 		try {
-			
+			let iduser = req.user.id
+			let nominal = req.body.nominal
+			const findUser = await User.findByPk(iduser)
+			await User.update({
+					balance: +findUser.balance + Number(nominal)
+				},
+				{
+					where: {
+						id: iduser
+					}
+				}
+			)
+			res.status(200).json({message: `Rp. ${nominal} add to your balance`})
 		} catch (err) {
-			
+			next(err)
 		}
 	}
 

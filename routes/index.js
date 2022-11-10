@@ -3,7 +3,7 @@ const userRouter = require('./user')
 const gameRouter = require('./game')
 const gameItemRouter = require('./gameItem')
 const authentication = require('../middlewares/authentication')
-const GoogleLogin = require('../controllers/googleLogin')
+const googlelogin = require('../controllers/googlelogin.js')
 const MidtransController = require('../controllers/MidtransController')
  
 app.get('/', (req,res)=>{
@@ -12,7 +12,7 @@ app.get('/', (req,res)=>{
 
 router.use('/users', userRouter)
 
-router.post('/google-login', GoogleLogin.userGoogleLogin)
+router.post('/google-login', googlelogin.userGoogleLogin)
 
 router.use(authentication)
 

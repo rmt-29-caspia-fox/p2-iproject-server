@@ -300,6 +300,159 @@ _Response (200 - OK)_
 }
 ```
 
+## 7. GET /mydetail
+
+Description:
+
+- Get user detail
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "_id": "636c384ac5353038a779fdf0",
+    "name": "Irwansyah",
+    "email": "irwndmusic@gmail.com",
+    "password": "string",
+    "rent": [
+        {
+            "vehicleId": "636b0aab187b91086d3b43d4",
+            "startDate": "2022-11-10",
+            "endDate": "2022-11-13",
+            "duration": 4,
+            "totalPrice": 2880000,
+            "paymentStatus": true
+        },
+        {
+            "vehicleId": "636b0aab187b91086d3b43da",
+            "startDate": "2022-11-10",
+            "endDate": "2022-11-12",
+            "duration": 2,
+            "totalPrice": 960000,
+            "paymentStatus": false
+        },
+        {
+            "vehicleId": "636b0aab187b91086d3b43dc",
+            "startDate": "2022-11-10",
+            "endDate": "2022-11-12",
+            "duration": 3,
+            "totalPrice": 1800000,
+            "paymentStatus": false
+        },
+        {
+            "vehicleId": "636b0aab187b91086d3b43d3",
+            "startDate": "2022-11-12",
+            "endDate": "2022-11-16",
+            "duration": 4,
+            "totalPrice": 2400000,
+            "paymentStatus": false
+        },
+        {
+            "vehicleId": "636b0aab187b91086d3b43d7",
+            "startDate": "2022-11-10",
+            "endDate": "2022-11-14",
+            "duration": 4,
+            "totalPrice": 3840000,
+            "paymentStatus": false
+        },
+       ...
+    ]
+}
+```
+
+## 8. post /payment/:id/checkout
+
+Description:
+
+- Midtrans payment
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "token": "string"
+}
+```
+
+## 9. post /mailer
+
+Description:
+
+- Mailer for url and qrcode url for finishing payment
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- body:
+
+```json
+{
+  "email": "string",
+  "url": "string",
+  "qrcode": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Email sent"
+}
+```
+
+## 10. PATCH /vehicle/payment/success/:vehicleId
+
+Description:
+
+- Payment status changer after completing payment of a certain order
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Updated successfully"
+}
+```
+
 
 &nbsp;
 

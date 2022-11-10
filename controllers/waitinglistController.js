@@ -1,4 +1,5 @@
 const { WaitingList, Customer } = require("../models");
+const { getPagination, getPagingData } = require('../helpers/pagination');
 
 class WaitingListController {
   static async getWaitinglist(req, res, next) {
@@ -26,16 +27,25 @@ class WaitingListController {
   }
 
   static async getWaitinglistCustomer(req, res, next) {
-    try {   
+    try {
+      let { page } = req.query;
+      if(page > 0){
+        page = page -1
+      }
+      const { limit, offset } = getPagination(page);
+      
       let option = {
-        order: [["createdAt", "asc"]],
+        order: [["updatedAt", "asc"]],
         include: [Customer],
+        limit: limit,
+        offset: offset,
         where: {},
       };
       option.where = { status: ['done','waiting','onprogres'] };
 
-      const data = await WaitingList.findAll(option);
-      res.status(200).json(data);
+      const data = await WaitingList.findAndCountAll(option)
+      const response = getPagingData(data, page, limit);
+      res.status(200).json(response);
     } catch (err) {
       next(err);
     }

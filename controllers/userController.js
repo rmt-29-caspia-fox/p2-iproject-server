@@ -1,5 +1,6 @@
 const { where } = require('sequelize')
 const { hashedPassword, signedToken, comparePassword } = require('../helpers')
+const { OAuth2Client } = require('google-auth-library');
 const {User} = require('../models/index')
 
 class userController{
@@ -75,6 +76,40 @@ class userController{
       res.status(201).json(responseData)
     } catch (err) {
       next(err)
+    }
+  }
+
+  static async googleSignIn(req, res, next){
+    try {
+      const CLIENT_ID = process.env.CLIENT_ID
+      const {google_token} = req.headers
+      const client = new OAuth2Client(CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: google_token,
+        audience: CLIENT_ID,
+      });
+
+      const payload = ticket.getPayload()
+      const [user, created] = await User.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          fullName: payload.given_name + payload.family_name,  
+          email: payload.email, 
+          password: 'google-sign-in',
+          role: 'Customer',
+          phoneNumber: '0821000', 
+          address: 'address google sign in'
+        },
+        hooks: false
+      });
+
+      const access_token = signedToken({
+        id : user.id
+      })
+
+      res.status(200).json({access_token})
+    } catch (error) {
+      next(error)
     }
   }
 }

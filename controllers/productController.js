@@ -48,6 +48,18 @@ class ProductController {
       next(err)
     }
   }
+  static async getProductDetail(req, res, next){
+    try {
+      const {id} = req.params
+      const product = await Product.findByPk(id)
+      if (!product) {
+        throw { name: "Product not found" };
+      }
+      res.status(200).json(product)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = ProductController

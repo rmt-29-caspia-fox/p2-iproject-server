@@ -2,6 +2,7 @@ const { comparingPassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { Admin } = require("../models");
 const nodemailer = require("nodemailer");
+const { OAuth2Client } = require("google-auth-library");
 
 class AdminController {
   static async register(req, res, next) {
@@ -72,6 +73,34 @@ class AdminController {
       });
     } catch (err) {
       next(err);
+    }
+  }
+  static async googleAdminSignin(req, res, next) {
+    try {
+      const ACCESS_TOKEN = req.headers.google_token;
+      const client = new OAuth2Client();
+      client.setCredentials({ access_token: ACCESS_TOKEN });
+      const userinfo = await client.request({
+        url: "https://www.googleapis.com/oauth2/v3/userinfo",
+      });
+
+      const payload = userinfo.data;
+      // const userid = payload.sub
+
+      const [admin, created] = await Admin.findOrCreate({
+        where: { email: payload.email },
+        defaults: {
+          username: payload.name.replace(" ", "_"),
+          email: payload.email,
+          password: "kosong123",
+        },
+        hooks: false,
+      });
+      const access_token = signToken(admin.id);
+      const status = created ? 201 : 200;
+      res.status(status).json({ access_token });
+    } catch (error) {
+      next(error);
     }
   }
 }

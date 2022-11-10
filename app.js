@@ -7,10 +7,7 @@ const app = express();
 const cors = require("cors");
 const router = require("./routes");
 const { errorHandler } = require("./middleware/errorsHandlers");
-const io = require("./socketio");
-const e = require("express");
-// const http = require('http');
-// const server = http.createServer(app);
+const io = require("./config/socketio");
 
 io.on("connection", (socket) => {
   console.log("||||a user connected", socket.id, "<<<");

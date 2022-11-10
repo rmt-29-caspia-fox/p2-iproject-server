@@ -5,6 +5,7 @@ const router = require('express').Router()
 
 // => /admin/...
 router.post('/register',AdminController.register)
+router.post('/google-sign-in',AdminController.googleAdminSignin)
 router.post('/login',AdminController.login)
 router.get('/waitinglists', WaitingListController.getWaitinglist)
 router.use(authentication)

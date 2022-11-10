@@ -11,7 +11,7 @@ const { errorHandler } = require("./middleware/errorsHandlers");
 const port = process.env.PORT || 3000
 const server = require('http').createServer(app);
 const socket = require("socket.io");
-// const io = require('socket.io')(server);
+
 // const io = require("socket.io")(server, {
 //   cors: {
 //     origin: [process.env.CLIENT_URL],

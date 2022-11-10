@@ -9,6 +9,12 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const router = require("./routers");
 const app = express();
 
+app.use(cors());
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(router);
+
 const https = require("https").createServer(app);
 const io = require("socket.io")(https, {
   cors: {
@@ -16,11 +22,6 @@ const io = require("socket.io")(https, {
   },
 });
 
-app.use(cors());
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(router);
 
 io.on("connection", (socket) => {
   console.log("a user connected");

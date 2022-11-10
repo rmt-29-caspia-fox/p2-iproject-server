@@ -372,3 +372,12 @@ app.post("/mailer", async(req, res) => {
     res.status(500).json({ message: 'Internal server error'})
   }
 })
+
+app.patch("/vehicle/payment/success/:vehicleId", async(req, res) => {
+  try {
+    await db.collection("users").updateOne({_id: ObjectId(req.user.id), 'rent.vehicleId': `${req.params.vehicleId}`}, {$set: {'rent.$.paymentStatus': true}})
+    res.status(200).json({ message: 'Updated successfully'})
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error'})
+  }
+})

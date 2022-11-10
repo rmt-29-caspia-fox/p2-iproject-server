@@ -206,6 +206,42 @@ class Controller {
       next(error);
     }
   }
+  static async editFav(req,res,next){
+    try {
+      const UserId = req.user.id;
+      const favId = req.params.id;
+      const {review,shortDesc} = req.body;
+      const oneFav = await Favourite.findOne({
+        where: { id: favId },
+      });
+      if (!oneFav) {
+        throw { name: "NotFound" };
+      };
+      if (oneFav.UserId !== UserId) {
+        throw { name: "unauthorized" };
+      }
+      oneFav.set({
+        review,
+        shortDesc,
+      });
+      await oneFav.save();
+      res.status(200).json({ message: "Your review has been added!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async delFav(req,res,next){
+    try {
+      const UserId = req.user.id;
+      const favId = req.params.id;
+      await Favourite.destroy({
+        where: { id:favId },
+      });
+      res.status(200).json({ message: "Your favourite has been destroyed!" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;

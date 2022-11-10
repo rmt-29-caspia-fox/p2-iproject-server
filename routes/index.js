@@ -30,7 +30,9 @@ router.use(async (req, res, next) => {
 });
 
 router.post("/favourite", Controller.postFav);
-router.get("/favourite",Controller.getFav)
+router.get("/favourite",Controller.getFav);
+router.put("/favourite/:favId", Controller.editFav);
+router.delete("/favourite/:favId", Controller.delFav);
 // router.post("/google-access-api", Controller.gApiAccess);
 // router.post("/consent-page", Controller.constentPage);
 // router.post("/oauth2callback", Controller);

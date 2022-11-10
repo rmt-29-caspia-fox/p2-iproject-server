@@ -25,10 +25,30 @@ module.exports = (sequelize, DataTypes) => {
       googleId: DataTypes.STRING,
       author: DataTypes.STRING,
       imageUrl: DataTypes.STRING,
+      review: {
+        type: DataTypes.INTEGER,
+        validate: {
+          min: {
+            args: 1,
+            msg: "Must be higher than one!",
+          },
+          max: {
+            args: 5,
+            msg: "Must be below five!",
+          },
+        },
+      },
+      shortDesc: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "Favourite",
+      hooks:{
+        beforeCreate:(instance)=>{
+          instance.review = null
+          instance.shortDesc = null;
+        }
+      }
     }
   );
   return Favourite;

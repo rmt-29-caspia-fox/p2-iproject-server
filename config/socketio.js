@@ -1,6 +1,6 @@
 const io = require("socket.io")(3030, {
   cors: {
-    origin: ["http://localhost:8080"],
+    origin: [process.env.CLIENT_URL],
     methods: ["GET", "POST"],
     credentials: true,
     transports: ["websocket", "polling"],

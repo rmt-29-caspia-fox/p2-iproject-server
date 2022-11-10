@@ -1,4 +1,6 @@
 const express = require("express");
+// const axios = require("axios");
+// const midtransClient = require("midtrans-client");
 const fs = require("fs");
 const { hashPassword, comparePassword } = require("./helpers/bcrypt");
 const { encodeToken, decodeToken } = require("./helpers/jwt");
@@ -211,6 +213,59 @@ app.delete("/carts/:id", authorization, async (req, res, next) => {
 		next(err);
 	}
 });
+
+// app.get("/carts/payment", async (req, res, next) => {
+// 	try {
+// 		let getCurrentTimestamp = () => {
+// 			return "" + Math.round(new Date().getTime() / 1000);
+// 		};
+// 		await axios({
+// 			// Below is the API URL endpoint
+// 			url: "https://app.sandbox.midtrans.com/snap/v1/transactions",
+// 			method: "post",
+// 			headers: {
+// 				"Content-Type": "application/json",
+// 				Accept: "application/json",
+// 				Authorization:
+// 					"Basic " +
+// 					Buffer.from("SB-Mid-server-Hgx1_XJ42nh0NHrjvpV4pkm-").toString(
+// 						"base64"
+// 					),
+// 				// Above is API server key for the Midtrans account, encoded to base64
+// 			},
+// 			data:
+// 				// Below is the HTTP request body in JSON
+// 				{
+// 					transaction_details: {
+// 						order_id: "order-csb-" + getCurrentTimestamp(),
+// 						gross_amount: 10000,
+// 					},
+// 					credit_card: {
+// 						secure: true,
+// 					},
+// 					customer_details: {
+// 						first_name: "Johny",
+// 						last_name: "Kane",
+// 						email: "testmidtrans@mailnesia.com",
+// 						phone: "08111222333",
+// 					},
+// 				},
+// 		}).then(
+// 			(snapResponse) => {
+// 				let snapToken = snapResponse.data.token;
+// 				console.log("Retrieved snap token:", snapToken);
+// 				// Pass the Snap Token to frontend, render the HTML page
+// 				res.status(200).json({ token: snapToken });
+// 			},
+// 			(error) => {
+// 				res.status(400).json({ message: `Fail to call API w/ error ${error}` });
+// 				console.log(error);
+// 			}
+// 		);
+// 	} catch (err) {
+// 		next(err);
+// 	}
+// });
 
 // Error Handler
 app.use(async (err, req, res, next) => {

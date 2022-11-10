@@ -22,9 +22,6 @@ const errorHandler = (err, req, res, next) => {
     }else if (err.name === "notFound") {
       code = 404
       msg = 'Item not found!'
-    }else if (err.name === "forbiden") {
-      code = 403
-      msg = 'No authorization!'
     }else if (err.name === "InvalidNumber") {
       code = 404
       msg = 'Number is not available'

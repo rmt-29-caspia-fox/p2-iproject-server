@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --forceExit --runInBand",
-    "dev": "npx nodemon bin/www"
+    "dev": "npx nodemon bin/www",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

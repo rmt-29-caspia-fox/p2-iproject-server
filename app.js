@@ -8,6 +8,7 @@ const { errorHandler } = require("./middlewares/errorHandler");
 const router = require("./routers");
 const app = express();
 const http = require("http").createServer(app);
+const PORT = process.env.PORT ||3000
 const io = require("socket.io")(http, {
   cors: {
     origins: ["http://localhost:8080","http://matching-u.web.app"]
@@ -54,6 +55,6 @@ io.on("connection", (socket) => {
 
 app.use(errorHandler);
 
-http.listen(3000, () => {
+http.listen(PORT, () => {
   console.log("listeninghttp on *:3000");
 });

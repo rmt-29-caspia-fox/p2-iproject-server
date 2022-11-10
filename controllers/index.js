@@ -6,11 +6,13 @@ class Controller {
   static async register(req, res, next) {
     try {
       const { email, password, username } = req.body;
-      const user = await User.create({ email, password, username });
+      const profilePic = req.file.path
+      const user = await User.create({ email, password, username, profilePic });
       res
         .status(201)
         .json({ id: user.id, email: user.email, username: user.username });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

@@ -60,7 +60,6 @@ module.exports = (sequelize, DataTypes) => {
 
   User.beforeCreate((user, options) => {
     user.password = hashPw(user.password);
-    user.profilePic = "template.png";
   });
   return User;
 };

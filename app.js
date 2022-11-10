@@ -6,9 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const { errorHandler } = require("./middlewares/errorHandler");
 
-// multer
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+
 
 const router = require("./routers");
 const app = express();

@@ -15,7 +15,7 @@ class GameItemController {
 			const gameItems = await GameItem.findAll(query)
 			res.status(200).json({gameItems	})
 		} catch (error) {
-			console.log(error);
+			next(error)
 		}
 	}
 }

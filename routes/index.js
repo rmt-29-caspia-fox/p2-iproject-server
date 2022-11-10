@@ -6,6 +6,9 @@ const authentication = require('../middlewares/authentication')
 const GoogleLogin = require('../controllers/googleLogin')
 const MidtransController = require('../controllers/MidtransController')
  
+app.get('/', (req,res)=>{
+	res.send('okk')
+})
 
 router.use('/users', userRouter)
 

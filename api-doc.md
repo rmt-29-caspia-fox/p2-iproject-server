@@ -385,6 +385,13 @@ Request:
   "access_token": "string"
 }
 ```
+- params:
+
+```json
+{
+  "id": "integer"
+}
+```
 
 _Response (200 - OK)_
 
@@ -441,6 +448,14 @@ Request:
 ```json
 {
   "access_token": "string"
+}
+```
+
+- params:
+
+```json
+{
+  "vehicleId": "integer"
 }
 ```
 

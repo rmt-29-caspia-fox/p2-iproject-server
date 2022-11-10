@@ -15,8 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(router);
 
-const https = require("https").createServer(app);
-const io = require("socket.io")(https, {
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, {
   cors: {
     origins: ["http://localhost:8080", "https://matching-u.web.app"],
   },
@@ -58,6 +58,6 @@ io.on("connection", (socket) => {
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
-https.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`listening https on *: ${PORT}`);
 });

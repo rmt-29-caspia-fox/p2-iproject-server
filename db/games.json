@@ -1,0 +1,22 @@
+[
+	{
+		"name": "Mobile Legends",
+		"imgUrl": "https://cdn1.codashop.com/S/content/mobile/images/product-tiles/mlbb_tile.jpg"
+	},
+	{
+		"name": "Free Fire",
+		"imgUrl": "https://cdn1.codashop.com/S/content/mobile/images/product-tiles/ff_ccid_tile.jpg"
+	},
+	{
+		"name": "VALORANT",
+		"imgUrl": "https://cdn1.codashop.com/S/content/mobile/images/product-tiles/valorant_ccid_tile.jpg"
+	},
+	{
+		"name": "Ragnarok X: Next Generation",
+		"imgUrl": "https://cdn1.codashop.com/S/content/mobile/images/product-tiles/rox_ccid_tile.jpg"
+	},
+	{
+		"name": "Call of Duty: Mobile",
+		"imgUrl": "https://cdn1.codashop.com/S/content/mobile/images/product-tiles/codm_ccid_tile.jpg"
+	}
+]

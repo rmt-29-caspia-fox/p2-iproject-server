@@ -1,0 +1,232 @@
+[
+  {
+    "GameId": 1,
+    "item": 3,
+    "price": 1500
+  },
+  {
+    "GameId": 1,
+    "item": 5,
+    "price": 1700
+  },
+  {
+    "GameId": 1,
+    "item": 11,
+    "price": 3700
+  },
+  {
+    "GameId": 1,
+    "item": 17,
+    "price": 5800
+  },
+  {
+    "GameId": 1,
+    "item": 25,
+    "price": 8500
+  },
+  {
+    "GameId": 1,
+    "item": 40,
+    "price": 12700
+  },
+  {
+    "GameId": 1,
+    "item": 53,
+    "price": 16900
+  },
+  {
+    "GameId": 1,
+    "item": 77,
+    "price": 24300
+  },
+  {
+    "GameId": 1,
+    "item": 154,
+    "price": 48500
+  },
+  {
+    "GameId": 1,
+    "item": 217,
+    "price": 68500
+  },
+  {
+    "GameId": 2,
+    "item": 5,
+    "price": 1000
+  },
+  {
+    "GameId": 2,
+    "item": 12,
+    "price": 2000
+  },
+  {
+    "GameId": 2,
+    "item": 50,
+    "price": 8000
+  },
+  {
+    "GameId": 2,
+    "item": 70,
+    "price": 10000
+  },
+  {
+    "GameId": 2,
+    "item": 140,
+    "price": 20000
+  },
+  {
+    "GameId": 2,
+    "item": 355,
+    "price": 50000
+  },
+  {
+    "GameId": 2,
+    "item": 720,
+    "price": 100000
+  },
+  {
+    "GameId": 2,
+    "item": 1450,
+    "price": 200000
+  },
+  {
+    "GameId": 2,
+    "item": 2180,
+    "price": 300000
+  },
+  {
+    "GameId": 2,
+    "item": 3640,
+    "price": 500000
+  },
+  {
+    "GameId": 3,
+    "item": 125,
+    "price": 15000
+  },
+  {
+    "GameId": 3,
+    "item": 420,
+    "price": 50000
+  },
+  {
+    "GameId": 3,
+    "item": 700,
+    "price": 80000
+  },
+  {
+    "GameId": 3,
+    "item": 1375,
+    "price": 150000
+  },
+  {
+    "GameId": 3,
+    "item": 2400,
+    "price": 250000
+  },
+  {
+    "GameId": 3,
+    "item": 4000,
+    "price": 400000
+  },
+  {
+    "GameId": 3,
+    "item": 8150,
+    "price": 800000
+  },
+  {
+    "GameId": 4,
+    "item": 2520,
+    "price": 75000
+  },
+  {
+    "GameId": 4,
+    "item": 5340,
+    "price": 160000
+  },
+  {
+    "GameId": 4,
+    "item": 11180,
+    "price": 330000
+  },
+  {
+    "GameId": 4,
+    "item": 17260,
+    "price": 500000
+  },
+  {
+    "GameId": 4,
+    "item": 35850,
+    "price": 1000000
+  },
+  {
+    "GameId": 4,
+    "item": 53760,
+    "price": 1600000
+  },
+  {
+    "GameId": 4,
+    "item": 179240,
+    "price": 5000000
+  },
+  {
+    "GameId": 4,
+    "item": 358470,
+    "price": 10000000
+  },
+  {
+    "GameId": 4,
+    "item": 1075410,
+    "price": 30000000
+  },
+  {
+    "GameId": 5,
+    "item": 31,
+    "price": 5000
+  },
+  {
+    "GameId": 5,
+    "item": 62,
+    "price": 10000
+  },
+  {
+    "GameId": 5,
+    "item": 127,
+    "price": 20000
+  },
+  {
+    "GameId": 5,
+    "item": 320,
+    "price": 50000
+  },
+  {
+    "GameId": 5,
+    "item": 645,
+    "price": 100000
+  },
+  {
+    "GameId": 5,
+    "item": 800,
+    "price": 120000
+  },
+  {
+    "GameId": 5,
+    "item": 1373,
+    "price": 200000
+  },
+  {
+    "GameId": 5,
+    "item": 1675,
+    "price": 250000
+  },
+  {
+    "GameId": 5,
+    "item": 2059,
+    "price": 300000
+  },
+  {
+    "GameId": 5,
+    "item": 2749,
+    "price": 380000
+  }
+]

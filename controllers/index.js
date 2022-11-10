@@ -232,12 +232,14 @@ class Controller {
   }
   static async delFav(req,res,next){
     try {
-      const UserId = req.user.id;
-      const favId = req.params.id;
+      // const UserId = req.user.id;
+      const favId = req.params.favId;
+      console.log(favId,"FAV ID")
       await Favourite.destroy({
         where: { id:favId },
       });
       res.status(200).json({ message: "Your favourite has been destroyed!" });
+      
     } catch (error) {
       next(error);
     }

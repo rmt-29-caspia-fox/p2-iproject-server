@@ -10,6 +10,8 @@ List of available endpoints:
 - `POST /google-sign-in`
 - `POST /favourite`
 - `GET /favourite`
+- `PUT /favourite/:favId`
+- `DELETE /favourite/:favId`
 
 &nbsp;
 
@@ -229,7 +231,6 @@ _Response (201 - Created)_
 &nbsp;
 
 ## 5. POST /favourite
-
 Description:
 
 - Add a book to Favourite
@@ -270,50 +271,7 @@ _Response (200 - OK)_
   "updatedAt": DATE,
 }
 ```
-_Response (403 - Forbidden)_
-
-```json
-{
-  "message": "access unauthorized"
-}
-```
 &nbsp;
-
-
-
-Description:
-
-- Get number of products and categories
-
-Request:
-
-- headers:
-
-```json
-{
-  "access_token": "your_personal_token"
-}
-```
-
-_Response (200 - OK)_
-
-- Body:
-
-```json
-{
-  "productNum": "integer",
-  "categoryNum": "integer"
-}
-```
-
-_Response (401 - Unauthorized)_
-
-```json
-{
-  "message": "authentication failed"
-}
-```
-
 ## 6. GET /favourite
 
 Description:
@@ -351,20 +309,81 @@ _Response (200 - OK)_
 ```
 &nbsp;
 
+## 7. PUT /favourite/:favId
+
+Description:
+
+- Add / edit review for your favourite book
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "your_personal_token"
+}
+```
+- body:
+
+```json
+{
+  "review": 4,
+  "shortDesc":"string"
+}
+```
+
+_Response (200 - OK)_
+
+- Body:
+
+```json
+{
+  "message": "Your review has been added!"
+}
+```
+&nbsp;
+## 8. DELETE /favourite/:favId
+
+Description:
+
+- Delete your favourite book from favourite list
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "your_personal_token"
+}
+```
+
+_Response (200 - OK)_
+
+- Body:
+
+```json
+{
+  "message": "Your favourite has been destroyed!"
+}
+```
+&nbsp;
+
 ## Global Error
 
 _Response (401 - Unauthorized)_
 
 ```json
 {
-  "message": "authentication failed"
+  "message": "Invalid token"
 }
 ```
 _Response (403 - Forbidden)_
 
 ```json
 {
-  "message": "authentication failed"
+  "message": "You are unauthorized!"
 }
 ```
 _Response (500 - Internal Server Error)_

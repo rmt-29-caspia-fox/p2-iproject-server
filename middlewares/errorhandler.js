@@ -15,6 +15,12 @@ function errorHandler(error, req, res, next) {
   ) {
     code = 401;
     msg = "Invalid token";
+  } else if (error.name === "NotFound") {
+    code = 404;
+    msg = "Favourite not found!";
+  } else if (error.name === "unauthorized") {
+    code = 403;
+    msg = "You are unauthorized!";
   }
   res.status(code).json({ message: msg });
 }

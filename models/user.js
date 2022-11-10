@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-const { hashPw } = require('../helpers');
+"use strict";
+const { Model } = require("sequelize");
+const { hashPw } = require("../helpers");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,38 +12,55 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: {
+  User.init(
+    {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "E-mail is required" },
+          notEmpty: { msg: "E-mail is required" },
+          isEmail: {
+            args: true,
+            msg: "Invalid email format",
+          },
+        },
+        unique: {
           args: true,
-          msg: "Invalid email format",
+          msg: "Email must be unique",
         },
       },
-      unique: {
-        args: true,
-        msg: "Email must be unique"
-      }
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "Password is required" },
+          notEmpty: { msg: "Password is required" },
+        },
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: { msg: "User Name is required" },
+          notEmpty: { msg: "User Name is required" },
+        },
+        unique: {
+          args: true,
+          msg: "Username already registered",
+        },
+      },
+      profilePic: DataTypes.STRING,
     },
-    password: DataTypes.STRING,
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: {
-        args: true,
-        msg: "Username already registered"
-      }
-    },
-    profilePic: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
 
-  User.beforeCreate((user,options)=>{
-    user.password = hashPw(user.password)
-  })
+  User.beforeCreate((user, options) => {
+    user.password = hashPw(user.password);
+    user.profilePic = "template.png";
+  });
   return User;
 };

@@ -11,7 +11,7 @@ class FavControl {
         url: 'https://api.dazelpro.com/mobile-legends/hero/' + heroId,
         method: 'get',
       });
-      const fav = await Favorite.create({ UserId: 1, hero: data.hero });
+      const fav = await Favorite.create({ UserId: req.user.id, hero: data.hero });
       res.status(201).json(fav);
     } catch (err) {
       console.log(err);

@@ -1,6 +1,8 @@
 const { User } = require('../models');
 const { comparePass } = require('../helpers/bcrypt');
 const { encode } = require('../helpers/jwt');
+const { OAuth2Client } = require('google-auth-library');
+
 
 class UserControl {
   static async register(req, res, next) {
@@ -28,7 +30,7 @@ class UserControl {
       }
 
       const access_token = encode({ id: user.id, username: user.username });
-      res.status(200).json({ access_token });
+      res.status(200).json({ access_token , latitude: user.latitude, longitude: user.longitude});
     } catch (err) {
       next(err);
     }
@@ -46,7 +48,7 @@ class UserControl {
       });
       const payload = ticket.getPayload();
 
-      const [user, create] = await Customer.findOrCreate({
+      const [user, create] = await User.findOrCreate({
         where: {
           email: payload.email,
         },
@@ -58,7 +60,7 @@ class UserControl {
         hooks: false,
       });
 
-      const access_token = encode({ id: user.id});
+      const access_token = encode({ id: user.id, username: user.username});
 
       res.status(200).json({ access_token: access_token, name: user.username });
     } catch (error) {

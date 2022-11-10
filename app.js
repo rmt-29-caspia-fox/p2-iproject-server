@@ -12,7 +12,7 @@ const app = express();
 const https = require("https").createServer(app);
 const io = require("socket.io")(https, {
   cors: {
-    origins: ["http://localhost:8080", "https://matching-u.web.app/login"],
+    origins: ["http://localhost:8080", "https://matching-u.web.app"],
   },
 });
 

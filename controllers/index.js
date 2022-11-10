@@ -6,7 +6,7 @@ class Controller {
   static async register(req, res, next) {
     try {
       const { email, password, username } = req.body;
-      const profilePic = req.file.path
+      const profilePic = "-";
       const user = await User.create({ email, password, username, profilePic });
       res
         .status(201)
@@ -35,7 +35,9 @@ class Controller {
         id: user.id,
       };
       const access_token = encodeToken(payload);
-      res.status(200).json({ access_token, username: user.username });
+      res
+        .status(200)
+        .json({ access_token, username: user.username, id: user.id });
     } catch (err) {
       console.log(err);
       next(err);
@@ -83,14 +85,28 @@ class Controller {
     }
   }
 
+  static async getProfile(req, res, next) {
+    try {
+      const { id } = req.params;
+      const user = await User.findByPk(id);
+      res.status(200).json({ profilePic: user.profilePic });
+    } catch (err) {
+      next(err);
+    }
+  }
   static async updateProfile(req, res, next) {
     try {
       const { id } = req.params;
-      const { profilePic } = req.body;
-      await User.update({ profilePic }, { where: { id: id } });
-      res.status(200).json({message: "Profile Pic succesfully updated"})
+      if (!req.file) {
+        throw { name: "Image must be uploaded" };
+      }
+      const user = await User.update(
+        { profilePic: req.file.path },
+        { where: { id: id } }
+      );
+      res.status(200).json({ message: "Profile Pic succesfully updated" });
     } catch (err) {
-      next(err)
+      next(err);
     }
   }
 }

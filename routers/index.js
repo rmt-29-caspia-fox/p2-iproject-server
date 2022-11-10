@@ -6,25 +6,33 @@ const { authentication } = require("../middlewares");
 
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./assets");
+  destination: (req, file, cb) => {
+    cb(null, "assets");
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage: storage });
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype == "image/png" ||
+    file.mimetype == "image/jpg" ||
+    file.mimetype == "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.post("/register", upload.single("profilePic"), Controller.register);
 router.post("/login", Controller.login);
-router.post("/discordAuth", Controller.discord);
 
 router.use(authentication);
 
-router.put(
-  "/profile/:id",
-  upload.single("profilePic"),
-  Controller.updateProfile
-);
+router.get("/profile/:id", Controller.getProfile);
+router.put("/profile/:id", upload.single("profilePic"),Controller.updateProfile);
 
 module.exports = router;

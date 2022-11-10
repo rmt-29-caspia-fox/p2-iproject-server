@@ -50,5 +50,3 @@ app.use(errorHandler);
 server.listen(port,()=>{
   console.log(`listenin in port: ${port}`)
 });
-
-// module.exports = app;

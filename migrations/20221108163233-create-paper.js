@@ -13,14 +13,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      size: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      thickness: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       description: {
         allowNull: false,
         type: Sequelize.STRING

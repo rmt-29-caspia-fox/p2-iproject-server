@@ -1,7 +1,6 @@
 const errorHandler = (err, req, res, next) => {
     let code = 500;
     let message = "ISE";
-  
     if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {
       code = 401;
       message = "Invalid Token";

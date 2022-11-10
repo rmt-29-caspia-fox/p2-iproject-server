@@ -35,6 +35,7 @@ class Controller {
       const access_token = encodeToken(payload);
       res.status(200).json({ access_token, username: user.username });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

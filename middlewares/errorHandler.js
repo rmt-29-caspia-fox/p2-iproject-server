@@ -1,7 +1,6 @@
 const errorHandler = (err, req, res, next) => {
     let code = 500;
     let message = "ISE";
-  
     if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {
       code = 401;
       message = "Invalid Token";
@@ -23,6 +22,9 @@ const errorHandler = (err, req, res, next) => {
     } else if(err.name == "existed"){
       code = 400;
       message = "Movie already in wishlist!";
+    }else if(err.name == "Image must be uploaded"){
+      code = 400;
+      message = "Image must be uploaded!";
     }
   
     res.status(code).json({ message });

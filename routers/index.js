@@ -27,8 +27,9 @@ const fileFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
-router.post("/register", upload.single("profilePic"), Controller.register);
+router.post("/register", Controller.register);
 router.post("/login", Controller.login);
+router.post("/google-sign-in", Controller.google);
 
 router.use(authentication);
 

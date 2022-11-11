@@ -1,7 +1,7 @@
 [
   {
     "title": "Fantastic Beasts and Where to Find Them",
-    "authors":["Felicity Baker", "J. K. Rowling"],
+    "authors":"Felicity Baker, J. K. Rowling",
     "description": "An approved textbook at Hogwarts School of Witchcraft and Wizardry since publication, Newt Scamander's masterpiece has entertained wizarding families through the generations. Fantastic Beasts and Where to Find Them is an indispensable introduction to the magical beasts of the wizarding world.",
     "publisher": "Scholastic",
     "publishDate": null,
@@ -15,7 +15,7 @@
   },
   {
     "title": "The Filter Bubble How the New Personalized Web Is Changing What We Read and How We Think",
-    "authors":["Eli Parizer"],
+    "authors":"Eli Parizer",
     "description": "THE FILTER BUBBLE reveals how personalization could undermine the internet’s original purpose as an open platform for the spread of ideas, and leave us all in an isolated, echoing world. But it is not too late to change course. Pariser lays out a new vision for the web, one that embraces the benefits of technology without turning a blind eye to its negative consequences, and will ensure that the Internet lives up to its transformative promise.",
     "publisher": "Penguin Publishing Group",
     "publishDate": "12/05/2011",
@@ -23,7 +23,7 @@
     "isbn10": "1407179403",
     "pages": 64,
     "stock": 1,
-    "coverImage": "https://s2.bukalapak.com/img/2683101202/large/4355111_fab52b8b_a988_41cb_a647_26ecac589bc3_650_972.jpg",
+    "coverImage": "https://books.google.co.id/books/content?id=-FWO0puw3nYC&pg=PP1&img=1&zoom=3&hl=en&bul=1&sig=ACfU3U3_HkmzR7Axo3PBWJ1gUs5fH1V7Mw&w=1280",
     "CategoryId": 1,
     "LibrarianId": 1
   }

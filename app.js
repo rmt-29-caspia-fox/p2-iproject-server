@@ -69,6 +69,7 @@ app.post("/login", async (req, res, next) => {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			email: user.email,
+			avatar: user.avatar,
 		});
 	} catch (err) {
 		next(err);
@@ -114,6 +115,7 @@ app.post("/google-sign-in", async (req, res, next) => {
 			firstName: payload.given_name,
 			lastName: payload.family_name,
 			email: payload.email,
+			avatar: avatar,
 		});
 	} catch (err) {
 		next(err);
@@ -237,7 +239,6 @@ app.post("/midtrans-transaction-token", async (req, res, next) => {
 		});
 
 		const order_id = "TRANS_" + new Date().getTime();
-		console.log(">>>>>>", req.body);
 		let parameter = {
 			transaction_details: {
 				order_id: order_id, // isi order_id dengan value yang unique untuk tiap transaction

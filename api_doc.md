@@ -57,6 +57,7 @@ Routes below need authentication:
 Routes below need authentication & authorization:
 
 - `DELETE /carts/:id`
+- `POST /midtrans-transaction-token`
 
 &nbsp;
 
@@ -140,7 +141,11 @@ _Response (200 - OK)_
 
 ```json
 {
-	"access_token": "string"
+	"access_token": "string",
+	"firstName": "string",
+	"lastName": "string",
+	"email": "string",
+	"avatar": "string"
 }
 ```
 
@@ -186,7 +191,11 @@ _Response (200 - OK)_
 
 ```json
 {
-	"access_token": "string"
+	"access_token": "string",
+	"firstName": "string",
+	"lastName": "string",
+	"email": "string",
+	"avatar": "string"
 }
 ```
 
@@ -364,6 +373,39 @@ _Response (404 - Not Found)_
 ```json
 {
 	"message": "Product not found"
+}
+```
+
+&nbsp;
+
+## 8. POST /midtrans-transaction-token
+
+Request:
+
+- body:
+
+```json
+{
+	"price": "integer"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+	"transaction": {
+		"token": "string",
+		"redirect_url": "string"
+	}
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+	"message": "transaction_details.gross_amount is required"
 }
 ```
 

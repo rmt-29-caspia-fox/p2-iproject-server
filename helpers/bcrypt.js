@@ -8,7 +8,7 @@ function decodeBcrypt(password){
 function compareBcrypt(password, truePass) {
   return bcrypt.compareSync(password, truePass);
 }
-
+const NPH='ate'
 module.exports = {
   decodeBcrypt , compareBcrypt
 }
